@@ -38,8 +38,7 @@ straight-forward, and extensible.
 autoconf
 
 %configure
-make 
-#%{?_smp_mflags}
+make %{?_smp_mflags}
 
 
 %install
