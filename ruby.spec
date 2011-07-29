@@ -47,9 +47,35 @@ make install DESTDIR=%{buildroot}
 
 
 %files
-%doc
-
-
+%doc COPYING*
+%doc ChangeLog
+%doc GPL
+%doc LEGAL
+%doc NEWS
+%doc README
+%doc README.ja
+%doc README.EXT
+%doc README.EXT.ja
+%doc ToDo
+%doc doc/ChangeLog-*
+%doc doc/NEWS-*
+%{_bindir}/erb
+%{_bindir}/gem
+%{_bindir}/irb
+%{_bindir}/rake
+%{_bindir}/rdoc
+%{_bindir}/ri
+%{_bindir}/ruby
+%{_bindir}/testrb
+%{_mandir}/man1/erb*
+%{_mandir}/man1/irb*
+%{_mandir}/man1/rake*
+%{_mandir}/man1/ri*
+%{_mandir}/man1/ruby*
+%{_datadir}/ri
+%{_includedir}/ruby-%{ruby_abi}
+%{_libdir}/libruby-static.a
+%{_libdir}/ruby
 
 %changelog
 
