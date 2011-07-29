@@ -49,6 +49,11 @@ make %{?_smp_mflags}
 rm -rf %{buildroot}
 make install DESTDIR=%{buildroot}
 
+%check
+# Unfortunately not all tests passes :/ Moreover the test suite is unstable.
+# 8569 tests, 2200057 assertions, 2 failures, 2 errors, 0 skips
+# 8569 tests, 2200055 assertions, 3 failures, 2 errors, 0 skips
+make check || :
 
 %files
 %doc COPYING*
