@@ -41,7 +41,9 @@ straight-forward, and extensible.
 %build
 autoconf
 
-%configure
+%configure \
+        --disable-rpath
+
 make %{?_smp_mflags}
 
 
