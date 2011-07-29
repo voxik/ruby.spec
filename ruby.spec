@@ -90,9 +90,10 @@ make check || :
 %{_mandir}/man1/ruby*
 %{_datadir}/ri
 %{_includedir}/ruby-%{ruby_abi}
-%{_libdir}/libruby-static.a
 %{_libdir}/ruby
 %{_libdir}/libruby.so*
+# http://fedoraproject.org/wiki/Packaging:Guidelines#Packaging_Static_Libraries
+%exclude %{_libdir}/libruby-static.a
 
 %changelog
 
