@@ -42,7 +42,8 @@ straight-forward, and extensible.
 autoconf
 
 %configure \
-        --disable-rpath
+        --disable-rpath \
+        --enable-shared
 
 make %{?_smp_mflags}
 
@@ -56,6 +57,10 @@ make install DESTDIR=%{buildroot}
 # 8569 tests, 2200057 assertions, 2 failures, 2 errors, 0 skips
 # 8569 tests, 2200055 assertions, 3 failures, 2 errors, 0 skips
 make check || :
+
+%post -p /sbin/ldconfig
+
+%postun -p /sbin/ldconfig
 
 %files
 %doc COPYING*
@@ -87,6 +92,7 @@ make check || :
 %{_includedir}/ruby-%{ruby_abi}
 %{_libdir}/libruby-static.a
 %{_libdir}/ruby
+%{_libdir}/libruby.so*
 
 %changelog
 
