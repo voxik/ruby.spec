@@ -1,19 +1,23 @@
-%global ruby_major_version 1.9
-%global ruby_version %{ruby_major_version}.2
-%global ruby_patch_level 290
+%global major_version 1
+%global minor_version 9
+%global teeny_version 2
+%global patch_level 290
 
-%global ruby_abi %{ruby_major_version}.1
+%global major_minor_version %{major_version}.%{minor_version}
 
-%global ruby_archive %{name}-%{ruby_version}-p%{ruby_patch_level}
+%global ruby_version %{major_minor_version}.%{teeny_version}
+%global ruby_abi %{major_minor_version}.1
+
+%global ruby_archive %{name}-%{ruby_version}-p%{patch_level}
 
 Summary: An interpreter of object-oriented scripting language
 Name: ruby
-Version: %{ruby_version}.%{ruby_patch_level}
+Version: %{ruby_version}.%{patch_level}
 Release: 1%{?dist}
 Group: Development/Languages
 License: Ruby or GPLv2
 URL: http://ruby-lang.org/
-Source0: ftp://ftp.ruby-lang.org/pub/%{name}/%{ruby_major_version}/%{ruby_archive}.tar.gz
+Source0: ftp://ftp.ruby-lang.org/pub/%{name}/%{major_minor_version}/%{ruby_archive}.tar.gz
 BuildRequires: autoconf
 BuildRequires: gdbm-devel
 BuildRequires: ncurses-devel
