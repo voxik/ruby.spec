@@ -34,6 +34,19 @@ object-oriented programming.  It has many features to process text
 files and to do system management tasks (as in Perl).  It is simple,
 straight-forward, and extensible.
 
+
+%package devel
+Summary:    A Ruby development environment
+Group:      Development/Languages
+# Requires:   %{name}-libs = %{version}-%{release}
+Requires:   %{name} = %{version}-%{release}
+Provides:   ruby(devel) = %{major_minor_version}
+Provides:   ruby(devel) = %{ruby_version}
+
+%description devel
+Header files and libraries for building an extension library for the
+Ruby or an application embedding Ruby.
+
 %prep
 %setup -q -n %{ruby_archive}
 
@@ -70,8 +83,6 @@ make check || :
 %doc NEWS
 %doc README
 %doc README.ja
-%doc README.EXT
-%doc README.EXT.ja
 %doc ToDo
 %doc doc/ChangeLog-*
 %doc doc/NEWS-*
@@ -94,6 +105,15 @@ make check || :
 %{_libdir}/libruby.so*
 # http://fedoraproject.org/wiki/Packaging:Guidelines#Packaging_Static_Libraries
 %exclude %{_libdir}/libruby-static.a
+
+%files devel
+%doc COPYING*
+%doc GPL
+%doc LEGAL
+%doc README.EXT
+%lang(ja) %doc README.EXT.ja
+%{_includedir}/%{name}-%{ruby_abi}
+%{_libdir}/libruby.so
 
 %changelog
 
