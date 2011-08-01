@@ -45,7 +45,7 @@ autoconf
         --disable-rpath \
         --enable-shared
 
-make %{?_smp_mflags}
+make %{?_smp_mflags} COPY="cp -p"
 
 
 %install
