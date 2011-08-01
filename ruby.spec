@@ -76,13 +76,14 @@ make check || :
 %postun -p /sbin/ldconfig
 
 %files
-%doc COPYING*
+%doc COPYING
+%lang(ja) %doc COPYING.ja
 %doc ChangeLog
 %doc GPL
 %doc LEGAL
 %doc NEWS
 %doc README
-%doc README.ja
+%lang(ja) %doc README.ja
 %doc ToDo
 %doc doc/ChangeLog-*
 %doc doc/NEWS-*
