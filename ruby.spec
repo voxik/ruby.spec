@@ -1,7 +1,8 @@
 %global major_version 1
 %global minor_version 9
-%global teeny_version 2
-%global patch_level 290
+%global teeny_version 3
+# TODO: This is small hack, but works as long as the package is not official.
+%global patch_level review1
 
 %global major_minor_version %{major_version}.%{minor_version}
 
@@ -15,7 +16,7 @@ Name: ruby
 Version: %{ruby_version}.%{patch_level}
 Release: 1%{?dist}
 Group: Development/Languages
-License: Ruby or GPLv2
+License: Ruby or BSD
 URL: http://ruby-lang.org/
 Source0: ftp://ftp.ruby-lang.org/pub/%{name}/%{major_minor_version}/%{ruby_archive}.tar.gz
 BuildRequires: autoconf
@@ -115,6 +116,8 @@ make check || :
 %lang(ja) %doc README.EXT.ja
 %{_includedir}/%{name}-%{ruby_abi}
 %{_libdir}/libruby.so
+%dir %{_libdir}/pkgconfig
+%{_libdir}/pkgconfig/ruby-1.9.pc
 
 %changelog
 
