@@ -28,6 +28,8 @@ BuildRequires: openssl-devel
 BuildRequires: libyaml-devel
 BuildRequires: readline-devel
 BuildRequires: tk-devel
+# Needed to pass test_set_program_name(TestRubyOptions)
+BuildRequires: procps
 
 %description
 Ruby is the interpreted scripting language for quick and easy
