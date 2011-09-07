@@ -1,0 +1,116 @@
+From 0d24bc0ee69cc95fafa3e2345cf6232e39cebd2e Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?V=C3=ADt=20Ondruch?= <vondruch@redhat.com>
+Date: Thu, 25 Aug 2011 14:33:51 +0200
+Subject: [PATCH] Allow to disable versioned paths.
+
+---
+ configure.in     |   11 +++++++++++
+ tool/mkconfig.rb |    9 ++++++---
+ version.c        |   10 ++++++++++
+ 3 files changed, 27 insertions(+), 3 deletions(-)
+
+diff --git a/configure.in b/configure.in
+index 53f0a72..15f3d58 100644
+--- a/configure.in
++++ b/configure.in
+@@ -2962,6 +2962,17 @@ else
+ fi
+ AC_SUBST(USE_RUBYGEMS)
+ 
++AC_ARG_ENABLE(versioned-paths,
++	AS_HELP_STRING([--disable-versioned-paths], [disable paths with version number]),
++	[enable_versioned_paths="$enableval"], [enable_versioned_paths=yes])
++if test x"$enable_versioned_paths" = xno; then
++    AC_DEFINE(DISABLE_VERSIONED_PATHS, 1)
++    USE_VERSIONED_PATHS=NO
++else
++    USE_VERSIONED_PATHS=YES
++fi
++AC_SUBST(USE_VERSIONED_PATHS)
++
+ arch_hdrdir="${EXTOUT}/include/${arch}/ruby"
+ AS_MKDIR_P("${arch_hdrdir}")
+ config_h="${arch_hdrdir}/config.h"
+diff --git a/tool/mkconfig.rb b/tool/mkconfig.rb
+index b707c4b..6804e9c 100755
+--- a/tool/mkconfig.rb
++++ b/tool/mkconfig.rb
+@@ -42,6 +42,7 @@ v_others = []
+ vars = {}
+ continued_name = nil
+ continued_line = nil
++path_version = "/$(ruby_version)"
+ File.foreach "config.status" do |line|
+   next if /^#/ =~ line
+   name = nil
+@@ -138,6 +139,8 @@ File.foreach "config.status" do |line|
+     case name
+     when "ruby_version"
+       version = val[/\A"(.*)"\z/, 1]
++    when /^USE_VERSIONED_PATHS$/
++      path_version = nil if /NO/ =~ val
+     end
+   end
+ #  break if /^CEOF/
+@@ -203,15 +206,15 @@ end
+ print(*v_fast)
+ print(*v_others)
+ print <<EOS
+-  CONFIG["rubylibdir"] = "$(rubylibprefix)/$(ruby_version)"
++  CONFIG["rubylibdir"] = "$(rubylibprefix)#{path_version}"
+   CONFIG["archdir"] = "$(rubylibdir)/$(arch)"
+ EOS
+ print <<EOS unless v_disabled["sitedir"]
+-  CONFIG["sitelibdir"] = "$(sitedir)/$(ruby_version)"
++  CONFIG["sitelibdir"] = "$(sitedir)#{path_version}"
+   CONFIG["sitearchdir"] = "$(sitelibdir)/$(sitearch)"
+ EOS
+ print <<EOS unless v_disabled["vendordir"]
+-  CONFIG["vendorlibdir"] = "$(vendordir)/$(ruby_version)"
++  CONFIG["vendorlibdir"] = "$(vendordir)#{path_version}"
+   CONFIG["vendorarchdir"] = "$(vendorlibdir)/$(sitearch)"
+ EOS
+ print <<EOS
+diff --git a/version.c b/version.c
+index 59d4e5e..cb96f9d 100644
+--- a/version.c
++++ b/version.c
+@@ -38,9 +38,15 @@
+ #define RUBY_VENDOR_LIB RUBY_LIB_PREFIX"/vendor_ruby"
+ #endif
+ 
++#ifdef DISABLE_VERSIONED_PATHS
++#define RUBY_LIB                    RUBY_LIB_PREFIX
++#define RUBY_SITE_LIB2              RUBY_SITE_LIB
++#define RUBY_VENDOR_LIB2            RUBY_VENDOR_LIB
++#else
+ #define RUBY_LIB                    RUBY_LIB_PREFIX  "/"RUBY_LIB_VERSION
+ #define RUBY_SITE_LIB2              RUBY_SITE_LIB    "/"RUBY_LIB_VERSION
+ #define RUBY_VENDOR_LIB2            RUBY_VENDOR_LIB  "/"RUBY_LIB_VERSION
++#endif
+ #define RUBY_ARCHLIB                RUBY_LIB         "/"RUBY_ARCH
+ #define RUBY_SITE_ARCHLIB           RUBY_SITE_LIB2   "/"RUBY_SITEARCH
+ #define RUBY_VENDOR_ARCHLIB         RUBY_VENDOR_LIB2 "/"RUBY_SITEARCH
+@@ -70,7 +76,9 @@ const char ruby_initial_load_paths[] =
+     RUBY_SEARCH_PATH "\0"
+ #endif
+ #ifndef NO_RUBY_SITE_LIB
++#ifndef DISABLE_VERSIONED_PATHS
+     RUBY_SITE_LIB2 "\0"
++#endif
+ #ifdef RUBY_SITE_THIN_ARCHLIB
+     RUBY_SITE_THIN_ARCHLIB "\0"
+ #endif
+@@ -79,7 +87,9 @@ const char ruby_initial_load_paths[] =
+ #endif
+ 
+ #ifndef NO_RUBY_VENDOR_LIB
++#ifndef DISABLE_VERSIONED_PATHS
+     RUBY_VENDOR_LIB2 "\0"
++#endif
+ #ifdef RUBY_VENDOR_THIN_ARCHLIB
+     RUBY_VENDOR_THIN_ARCHLIB "\0"
+ #endif
+-- 
+1.7.6
+

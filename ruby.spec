@@ -11,6 +11,17 @@
 
 %global ruby_archive %{name}-%{ruby_version}-p%{patch_level}
 
+# This is the local lib/arch and should not be used for packaging.
+%global ruby_sitedir site_ruby
+%global ruby_sitelibdir %{_prefix}/local/share/ruby/%{ruby_sitedir}
+%global ruby_sitearchdir %{_prefix}/local/%{_lib}/ruby/%{ruby_sitedir}
+
+# This is the general location for libs/archs compatible with all
+# or most of the Ruby versions available in the Fedora repositories.
+%global ruby_vendordir vendor_ruby
+%global ruby_vendorlibdir %{_datadir}/ruby/%{ruby_vendordir}
+%global ruby_vendorarchdir %{_libdir}/ruby/%{ruby_vendordir}
+
 Summary: An interpreter of object-oriented scripting language
 Name: ruby
 Version: %{ruby_version}.%{patch_level}
@@ -19,6 +30,12 @@ Group: Development/Languages
 License: Ruby or BSD
 URL: http://ruby-lang.org/
 Source0: ftp://ftp.ruby-lang.org/pub/%{name}/%{major_minor_version}/%{ruby_archive}.tar.gz
+
+# http://redmine.ruby-lang.org/issues/5231
+Patch0: ruby-1.9.3-disable-versioned-paths.patch
+# http://redmine.ruby-lang.org/issues/5281
+Patch1: ruby-1.9.3-added-site-and-vendor-arch-flags.patch
+
 BuildRequires: autoconf
 BuildRequires: gdbm-devel
 BuildRequires: ncurses-devel
@@ -53,13 +70,20 @@ Ruby or an application embedding Ruby.
 %prep
 %setup -q -n %{ruby_archive}
 
+%patch0 -p1
+%patch1 -p1
 
 %build
 autoconf
 
 %configure \
+        --with-sitedir='%{ruby_sitelibdir}' \
+        --with-sitearchdir='%{ruby_sitearchdir}' \
+        --with-vendordir='%{ruby_vendorlibdir}' \
+        --with-vendorarchdir='%{ruby_vendorarchdir}' \
         --disable-rpath \
-        --enable-shared
+        --enable-shared \
+        --disable-versioned-paths
 
 make %{?_smp_mflags} COPY="cp -p"
 
@@ -70,8 +94,8 @@ make install DESTDIR=%{buildroot}
 
 %check
 # Unfortunately not all tests passes :/ Moreover the test suite is unstable.
-# 8569 tests, 2200057 assertions, 2 failures, 2 errors, 0 skips
-# 8569 tests, 2200055 assertions, 3 failures, 2 errors, 0 skips
+# 10089 tests, 2208914 assertions, 3 failures, 0 errors, 45 skips
+# 10089 tests, 2208922 assertions, 7 failures, 0 errors, 45 skips
 make check || :
 
 %post -p /sbin/ldconfig
