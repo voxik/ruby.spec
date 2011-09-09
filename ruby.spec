@@ -81,6 +81,7 @@ autoconf
         --with-sitearchdir='%{ruby_sitearchdir}' \
         --with-vendordir='%{ruby_vendorlibdir}' \
         --with-vendorarchdir='%{ruby_vendorarchdir}' \
+        --with-rubyhdrdir='%{_includedir}' \
         --disable-rpath \
         --enable-shared \
         --disable-versioned-paths
@@ -128,7 +129,6 @@ make check || :
 %{_mandir}/man1/ri*
 %{_mandir}/man1/ruby*
 %{_datadir}/ri
-%{_includedir}/ruby-%{ruby_abi}
 %{_libdir}/ruby
 %{_libdir}/libruby.so*
 # http://fedoraproject.org/wiki/Packaging:Guidelines#Packaging_Static_Libraries
@@ -140,7 +140,12 @@ make check || :
 %doc LEGAL
 %doc README.EXT
 %lang(ja) %doc README.EXT.ja
-%{_includedir}/%{name}-%{ruby_abi}
+
+%{_includedir}/ruby.h
+%{_includedir}/ruby
+%dir %{_includedir}/%{_target}
+%{_includedir}/%{_target}/ruby
+
 %{_libdir}/libruby.so
 %dir %{_libdir}/pkgconfig
 %{_libdir}/pkgconfig/ruby-1.9.pc
