@@ -11,6 +11,9 @@
 
 %global ruby_archive %{name}-%{ruby_version}-p%{patch_level}
 
+%global ruby_libdir %{_datadir}/%{name}
+%global ruby_libarchdir %{_libdir}/%{name}
+
 # This is the local lib/arch and should not be used for packaging.
 %global ruby_sitedir site_ruby
 %global ruby_sitelibdir %{_prefix}/local/share/ruby/%{ruby_sitedir}
@@ -33,8 +36,10 @@ Source0: ftp://ftp.ruby-lang.org/pub/%{name}/%{major_minor_version}/%{ruby_archi
 
 # http://redmine.ruby-lang.org/issues/5231
 Patch0: ruby-1.9.3-disable-versioned-paths.patch
+# TODO: Should be submitted upstream?
+Patch1: ruby-1.9.3-arch-specific-dir.patch
 # http://redmine.ruby-lang.org/issues/5281
-Patch1: ruby-1.9.3-added-site-and-vendor-arch-flags.patch
+Patch2: ruby-1.9.3-added-site-and-vendor-arch-flags.patch
 
 BuildRequires: autoconf
 BuildRequires: gdbm-devel
@@ -72,11 +77,14 @@ Ruby or an application embedding Ruby.
 
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 autoconf
 
 %configure \
+        --with-rubylibprefix='%{ruby_libdir}' \
+        --with-archdir='%{ruby_libarchdir}' \
         --with-sitedir='%{ruby_sitelibdir}' \
         --with-sitearchdir='%{ruby_sitearchdir}' \
         --with-vendordir='%{ruby_vendorlibdir}' \
@@ -129,8 +137,9 @@ make check || :
 %{_mandir}/man1/ri*
 %{_mandir}/man1/ruby*
 %{_datadir}/ri
-%{_libdir}/ruby
 %{_libdir}/libruby.so*
+%{ruby_libdir}
+%{ruby_libarchdir}
 # http://fedoraproject.org/wiki/Packaging:Guidelines#Packaging_Static_Libraries
 %exclude %{_libdir}/libruby-static.a
 
