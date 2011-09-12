@@ -41,6 +41,8 @@ Patch1: ruby-1.9.3-arch-specific-dir.patch
 # http://redmine.ruby-lang.org/issues/5281
 Patch2: ruby-1.9.3-added-site-and-vendor-arch-flags.patch
 
+Requires: %{name}-libs%{?_isa} = %{version}-%{release}
+
 BuildRequires: autoconf
 BuildRequires: gdbm-devel
 BuildRequires: ncurses-devel
@@ -64,13 +66,24 @@ straight-forward, and extensible.
 Summary:    A Ruby development environment
 Group:      Development/Languages
 # Requires:   %{name}-libs = %{version}-%{release}
-Requires:   %{name} = %{version}-%{release}
+Requires:   %{name}%{?_isa} = %{version}-%{release}
 Provides:   ruby(devel) = %{major_minor_version}
 Provides:   ruby(devel) = %{ruby_version}
 
 %description devel
 Header files and libraries for building an extension library for the
 Ruby or an application embedding Ruby.
+
+%package libs
+Summary:    Libraries necessary to run Ruby
+Group:      Development/Libraries
+# ext/bigdecimal/bigdecimal.{c,h} are under (GPL+ or Artistic) which
+# are used for bigdecimal.so
+License:    (Ruby or BSD) and (GPL+ or Artistic)
+Provides:   ruby(abi) = %{ruby_abi}
+
+%description libs
+This package includes the libruby, necessary to run Ruby.
 
 %prep
 %setup -q -n %{ruby_archive}
@@ -107,9 +120,9 @@ make install DESTDIR=%{buildroot}
 # 10089 tests, 2208922 assertions, 7 failures, 0 errors, 45 skips
 make check || :
 
-%post -p /sbin/ldconfig
+%post libs -p /sbin/ldconfig
 
-%postun -p /sbin/ldconfig
+%postun libs -p /sbin/ldconfig
 
 %files
 %doc COPYING
@@ -137,6 +150,37 @@ make check || :
 %{_mandir}/man1/ri*
 %{_mandir}/man1/ruby*
 %{_datadir}/ri
+
+# http://fedoraproject.org/wiki/Packaging:Guidelines#Packaging_Static_Libraries
+%exclude %{_libdir}/libruby-static.a
+
+%files devel
+%doc COPYING*
+%doc GPL
+%doc LEGAL
+%doc README.EXT
+%lang(ja) %doc README.EXT.ja
+
+%{_includedir}/ruby.h
+%{_includedir}/ruby
+%dir %{_includedir}/%{_target}
+%{_includedir}/%{_target}/ruby
+
+%{_libdir}/libruby.so
+%dir %{_libdir}/pkgconfig
+%{_libdir}/pkgconfig/ruby-1.9.pc
+
+%files libs
+%doc COPYING
+%lang(ja) %doc COPYING.ja
+%doc GPL
+%doc LEGAL
+%doc README
+%lang(ja) %doc README.ja
+%{ruby_sitelibdir}
+%{ruby_sitearchdir}
+%{ruby_vendorlibdir}
+%{ruby_vendorarchdir}
 
 # List all these files explicitly to prevent surprises
 # Platform independent libraries.
@@ -280,25 +324,6 @@ make check || :
 %{ruby_libarchdir}/tcltklib.so
 %{ruby_libarchdir}/tkutil.so
 %{ruby_libarchdir}/zlib.so
-
-# http://fedoraproject.org/wiki/Packaging:Guidelines#Packaging_Static_Libraries
-%exclude %{_libdir}/libruby-static.a
-
-%files devel
-%doc COPYING*
-%doc GPL
-%doc LEGAL
-%doc README.EXT
-%lang(ja) %doc README.EXT.ja
-
-%{_includedir}/ruby.h
-%{_includedir}/ruby
-%dir %{_includedir}/%{_target}
-%{_includedir}/%{_target}/ruby
-
-%{_libdir}/libruby.so
-%dir %{_libdir}/pkgconfig
-%{_libdir}/pkgconfig/ruby-1.9.pc
 
 %changelog
 
