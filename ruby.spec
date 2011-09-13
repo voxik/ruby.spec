@@ -1,8 +1,7 @@
 %global major_version 1
 %global minor_version 9
 %global teeny_version 3
-# TODO: This is small hack, but works as long as the package is not official.
-%global patch_level review1
+%global patch_level 0
 
 %global major_minor_version %{major_version}.%{minor_version}
 
