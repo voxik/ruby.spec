@@ -98,7 +98,7 @@ Summary:    The Ruby standard for packaging ruby libraries
 Version:    %{rubygems_version}
 Group:      Development/Libraries
 License:    Ruby or MIT
-Requires:   ruby-libs = %{ruby_version_patch_level}
+Requires:   %{name}-libs = %{ruby_version_patch_level}
 Provides:   ruby(rubygems) = %{version}
 BuildArch:  noarch
 
