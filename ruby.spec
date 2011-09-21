@@ -99,6 +99,7 @@ Version:    %{rubygems_version}
 Group:      Development/Libraries
 License:    Ruby or MIT
 Requires:   %{name}-libs = %{ruby_version_patch_level}
+Provides:   gem = %{version}
 Provides:   ruby(rubygems) = %{version}
 BuildArch:  noarch
 
@@ -112,6 +113,7 @@ Version:    %{rake_version}
 Group:      Development/Libraries
 License:    Ruby or MIT
 Requires:   ruby(rubygems) = %{rubygems_version}
+Provides:   rake = %{version}
 Provides:   rubygem(rake) = %{version}
 BuildArch:  noarch
 
@@ -171,9 +173,7 @@ make check || :
 %doc doc/ChangeLog-*
 %doc doc/NEWS-*
 %{_bindir}/erb
-%{_bindir}/gem
 %{_bindir}/irb
-%{_bindir}/rake
 %{_bindir}/rdoc
 %{_bindir}/ri
 %{_bindir}/ruby
@@ -364,6 +364,7 @@ make check || :
 %{ruby_libarchdir}/zlib.so
 
 %files -n rubygems
+%{_bindir}/gem
 %{ruby_libdir}/rubygems
 %{ruby_libdir}/rubygems.rb
 %{ruby_libdir}/ubygems.rb
@@ -373,6 +374,7 @@ make check || :
 %exclude %{gemdir}/specifications/rake-%{rake_version}.gemspec
 
 %files -n rubygem-rake
+%{_bindir}/rake
 %{ruby_libdir}/rake.rb
 %{ruby_libdir}/rake
 %{gemdir}/gems/rake-%{rake_version}
