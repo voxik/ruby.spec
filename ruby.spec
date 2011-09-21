@@ -121,6 +121,20 @@ BuildArch:  noarch
 Rake is a Make-like program implemented in Ruby. Tasks and dependencies are
 specified in standard Ruby syntax.
 
+%package irb
+Summary:    The Interactive Ruby
+# TODO: The IRB has strange versioning. Keep the Ruby's versioning ATM.
+# http://redmine.ruby-lang.org/issues/5313
+Group:      Development/Libraries
+Requires:   %{name}-libs = %{ruby_version_patch_level}
+Provides:   irb = %{version}
+Provides:   ruby(irb) = %{version}
+BuildArch:  noarch
+
+%description irb
+The irb is acronym for Interactive Ruby.  It evaluates ruby expression
+from the terminal.
+
 %prep
 %setup -q -n %{ruby_archive}
 
@@ -173,13 +187,11 @@ make check || :
 %doc doc/ChangeLog-*
 %doc doc/NEWS-*
 %{_bindir}/erb
-%{_bindir}/irb
 %{_bindir}/rdoc
 %{_bindir}/ri
 %{_bindir}/ruby
 %{_bindir}/testrb
 %{_mandir}/man1/erb*
-%{_mandir}/man1/irb*
 %{_mandir}/man1/ri*
 %{_mandir}/man1/ruby*
 %{_datadir}/ri
@@ -221,6 +233,7 @@ make check || :
 # Platform independent libraries.
 %dir %{ruby_libdir}
 %{ruby_libdir}/*.rb
+%exclude %{ruby_libdir}/irb.rb
 %exclude %{ruby_libdir}/rake.rb
 %exclude %{ruby_libdir}/rubygems.rb
 %exclude %{ruby_libdir}/ubygems.rb
@@ -233,7 +246,7 @@ make check || :
 %{ruby_libdir}/fiddle
 %exclude %{ruby_libdir}/gems
 %{ruby_libdir}/io
-%{ruby_libdir}/irb
+%exclude %{ruby_libdir}/irb
 %{ruby_libdir}/json
 %{ruby_libdir}/matrix
 %{ruby_libdir}/minitest
@@ -379,6 +392,12 @@ make check || :
 %{gemdir}/gems/rake-%{rake_version}
 %{gemdir}/specifications/rake-%{rake_version}.gemspec
 %{_mandir}/man1/rake.1*
+
+%files irb
+%{_bindir}/irb
+%{ruby_libdir}/irb.rb
+%{ruby_libdir}/irb
+%{_mandir}/man1/irb.1*
 
 %changelog
 
