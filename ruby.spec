@@ -25,6 +25,8 @@
 %global ruby_vendorlibdir %{_datadir}/ruby/%{ruby_vendordir}
 %global ruby_vendorarchdir %{_libdir}/ruby/%{ruby_vendordir}
 
+%global rubygems_version 1.8.10
+
 Summary: An interpreter of object-oriented scripting language
 Name: ruby
 Version: %{ruby_version_patch_level}
@@ -42,6 +44,7 @@ Patch1: ruby-1.9.3-arch-specific-dir.patch
 Patch2: ruby-1.9.3-added-site-and-vendor-arch-flags.patch
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
+Requires: ruby(rubygems) => %{rubygems_version}
 
 BuildRequires: autoconf
 BuildRequires: gdbm-devel
@@ -84,6 +87,20 @@ Provides:   ruby(abi) = %{ruby_abi}
 
 %description libs
 This package includes the libruby, necessary to run Ruby.
+
+# TODO: Rename or not not rename to ruby-rubygems?
+%package -n rubygems
+Summary:    The Ruby standard for packaging ruby libraries
+Version:    %{rubygems_version}
+Group:      Development/Libraries
+License:    Ruby or MIT
+Requires:   ruby-libs = %{ruby_version_patch_level}
+Provides:   ruby(rubygems) = %{version}
+BuildArch:  noarch
+
+%description -n rubygems
+RubyGems is the Ruby standard for publishing and managing third party
+libraries.
 
 %prep
 %setup -q -n %{ruby_archive}
@@ -186,6 +203,8 @@ make check || :
 # Platform independent libraries.
 %dir %{ruby_libdir}
 %{ruby_libdir}/*.rb
+%exclude %{ruby_libdir}/rubygems.rb
+%exclude %{ruby_libdir}/ubygems.rb
 %{ruby_libdir}/bigdecimal
 %{ruby_libdir}/cgi
 %{ruby_libdir}/date
@@ -193,8 +212,7 @@ make check || :
 %{ruby_libdir}/dl
 %{ruby_libdir}/drb
 %{ruby_libdir}/fiddle
-# TODO: Is it right location for gems?
-%{ruby_libdir}/gems
+%exclude %{ruby_libdir}/gems
 %{ruby_libdir}/io
 %{ruby_libdir}/irb
 %{ruby_libdir}/json
@@ -207,12 +225,12 @@ make check || :
 %{ruby_libdir}/racc
 %{ruby_libdir}/rake
 %{ruby_libdir}/rbconfig
+%exclude %{ruby_libdir}/rbconfig/datadir.rb
 %{ruby_libdir}/rdoc
 %{ruby_libdir}/rexml
 %{ruby_libdir}/rinda
 %{ruby_libdir}/ripper
 %{ruby_libdir}/rss
-%{ruby_libdir}/rubygems
 %{ruby_libdir}/shell
 %{ruby_libdir}/syck
 %{ruby_libdir}/test
@@ -324,6 +342,14 @@ make check || :
 %{ruby_libarchdir}/tcltklib.so
 %{ruby_libarchdir}/tkutil.so
 %{ruby_libarchdir}/zlib.so
+
+%files -n rubygems
+%{ruby_libdir}/rubygems
+%{ruby_libdir}/rubygems.rb
+%{ruby_libdir}/ubygems.rb
+# TODO: Is this right location for gems?
+%{ruby_libdir}/gems
+%{ruby_libdir}/rbconfig/datadir.rb
 
 %changelog
 
