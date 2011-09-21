@@ -26,6 +26,10 @@
 %global ruby_vendorarchdir %{_libdir}/ruby/%{ruby_vendordir}
 
 %global rubygems_version 1.8.10
+# TODO: Is this right location for gems?
+%global gemdir %{ruby_libdir}/gems/1.9.1
+
+%global rake_version 0.9.2.2
 
 Summary: An interpreter of object-oriented scripting language
 Name: ruby
@@ -101,6 +105,19 @@ BuildArch:  noarch
 %description -n rubygems
 RubyGems is the Ruby standard for publishing and managing third party
 libraries.
+
+%package -n rubygem-rake
+Summary:    Ruby based make-like utility
+Version:    %{rake_version}
+Group:      Development/Libraries
+License:    Ruby or MIT
+Requires:   ruby(rubygems) = %{rubygems_version}
+Provides:   rubygem(rake) = %{version}
+BuildArch:  noarch
+
+%description -n rubygem-rake
+Rake is a Make-like program implemented in Ruby. Tasks and dependencies are
+specified in standard Ruby syntax.
 
 %prep
 %setup -q -n %{ruby_archive}
@@ -203,6 +220,7 @@ make check || :
 # Platform independent libraries.
 %dir %{ruby_libdir}
 %{ruby_libdir}/*.rb
+%exclude %{ruby_libdir}/rake.rb
 %exclude %{ruby_libdir}/rubygems.rb
 %exclude %{ruby_libdir}/ubygems.rb
 %{ruby_libdir}/bigdecimal
@@ -223,7 +241,7 @@ make check || :
 %{ruby_libdir}/optparse
 %{ruby_libdir}/psych
 %{ruby_libdir}/racc
-%{ruby_libdir}/rake
+%exclude %{ruby_libdir}/rake
 %{ruby_libdir}/rbconfig
 %exclude %{ruby_libdir}/rbconfig/datadir.rb
 %{ruby_libdir}/rdoc
@@ -347,9 +365,16 @@ make check || :
 %{ruby_libdir}/rubygems
 %{ruby_libdir}/rubygems.rb
 %{ruby_libdir}/ubygems.rb
-# TODO: Is this right location for gems?
-%{ruby_libdir}/gems
 %{ruby_libdir}/rbconfig/datadir.rb
+%{ruby_libdir}/gems
+%exclude %{gemdir}/gems/rake-%{rake_version}
+%exclude %{gemdir}/specifications/rake-%{rake_version}.gemspec
+
+%files -n rubygem-rake
+%{ruby_libdir}/rake.rb
+%{ruby_libdir}/rake
+%{gemdir}/gems/rake-%{rake_version}
+%{gemdir}/specifications/rake-%{rake_version}.gemspec
 
 %changelog
 
