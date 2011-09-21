@@ -180,7 +180,6 @@ make check || :
 %{_bindir}/testrb
 %{_mandir}/man1/erb*
 %{_mandir}/man1/irb*
-%{_mandir}/man1/rake*
 %{_mandir}/man1/ri*
 %{_mandir}/man1/ruby*
 %{_datadir}/ri
@@ -379,6 +378,7 @@ make check || :
 %{ruby_libdir}/rake
 %{gemdir}/gems/rake-%{rake_version}
 %{gemdir}/specifications/rake-%{rake_version}.gemspec
+%{_mandir}/man1/rake.1*
 
 %changelog
 
