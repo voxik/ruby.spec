@@ -211,8 +211,10 @@ make check || :
 %doc LEGAL
 %doc README
 %lang(ja) %doc README.ja
-%{ruby_sitelibdir}
-%{ruby_sitearchdir}
+# Exclude /usr/local directory since it is supposed to be managed by
+# local system administrator.
+%exclude %{ruby_sitelibdir}
+%exclude %{ruby_sitearchdir}
 %{ruby_vendorlibdir}
 %{ruby_vendorarchdir}
 
