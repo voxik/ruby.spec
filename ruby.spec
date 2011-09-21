@@ -262,7 +262,7 @@ make check || :
 %{ruby_libdir}/yaml
 
 # Platform specific libraries.
-%{_libdir}/libruby.so*
+%{_libdir}/libruby.so.*
 %dir %{ruby_libarchdir}
 %{ruby_libarchdir}/bigdecimal.so
 %{ruby_libarchdir}/continuation.so
