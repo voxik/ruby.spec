@@ -6,6 +6,7 @@
 %global major_minor_version %{major_version}.%{minor_version}
 
 %global ruby_version %{major_minor_version}.%{teeny_version}
+%global ruby_version_patch_level %{major_minor_version}.%{teeny_version}.%{patch_level}
 %global ruby_abi %{major_minor_version}.1
 
 %global ruby_archive %{name}-%{ruby_version}-p%{patch_level}
@@ -26,7 +27,7 @@
 
 Summary: An interpreter of object-oriented scripting language
 Name: ruby
-Version: %{ruby_version}.%{patch_level}
+Version: %{ruby_version_patch_level}
 Release: 1%{?dist}
 Group: Development/Languages
 License: Ruby or BSD
