@@ -51,7 +51,7 @@ Patch1: ruby-1.9.3-arch-specific-dir.patch
 Patch2: ruby-1.9.3-added-site-and-vendor-arch-flags.patch
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
-Requires: ruby(rubygems) => %{rubygems_version}
+Requires: ruby(rubygems) >= %{rubygems_version}
 
 BuildRequires: autoconf
 BuildRequires: gdbm-devel
