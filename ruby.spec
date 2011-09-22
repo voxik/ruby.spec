@@ -30,6 +30,7 @@
 %global gemdir %{ruby_libdir}/gems/1.9.1
 
 %global rake_version 0.9.2.2
+%global rdoc_version 3.9.4
 # TODO: The IRB has strange versioning. Keep the Ruby's versioning ATM.
 # http://redmine.ruby-lang.org/issues/5313
 %global irb_version %{ruby_version_patch_level}
@@ -102,6 +103,7 @@ Version:    %{rubygems_version}
 Group:      Development/Libraries
 License:    Ruby or MIT
 Requires:   %{name}-libs = %{ruby_version_patch_level}
+Requires:   rubygem(rdoc) = %{rdoc_version}
 Provides:   gem = %{version}
 Provides:   ruby(rubygems) = %{version}
 BuildArch:  noarch
@@ -109,6 +111,7 @@ BuildArch:  noarch
 %description -n rubygems
 RubyGems is the Ruby standard for publishing and managing third party
 libraries.
+
 
 %package -n rubygem-rake
 Summary:    Ruby based make-like utility
@@ -137,6 +140,22 @@ BuildArch:  noarch
 %description irb
 The irb is acronym for Interactive Ruby.  It evaluates ruby expression
 from the terminal.
+
+
+%package -n rubygem-rdoc
+Summary:    A tool to generate documentation from Ruby source files
+Version:    %{rdoc_version}
+Group:      Development/Libraries
+Requires:   ruby(irb) = %{irb_version}
+Provides:   rdoc = %{version}
+Provides:   rubygem(rdoc) = %{version}
+BuildArch:  noarch
+
+%description -n rubygem-rdoc
+The rdoc is a tool to generate the documentation from Ruby source files.
+It supports some output formats, like HTML, Ruby interactive reference (ri),
+XML and Windows Help file (chm).
+
 
 %prep
 %setup -q -n %{ruby_archive}
@@ -190,7 +209,6 @@ make check || :
 %doc doc/ChangeLog-*
 %doc doc/NEWS-*
 %{_bindir}/erb
-%{_bindir}/rdoc
 %{_bindir}/ri
 %{_bindir}/ruby
 %{_bindir}/testrb
@@ -237,6 +255,7 @@ make check || :
 %dir %{ruby_libdir}
 %{ruby_libdir}/*.rb
 %exclude %{ruby_libdir}/irb.rb
+%exclude %{ruby_libdir}/rdoc.rb
 %exclude %{ruby_libdir}/rake.rb
 %exclude %{ruby_libdir}/rubygems.rb
 %exclude %{ruby_libdir}/ubygems.rb
@@ -261,7 +280,7 @@ make check || :
 %exclude %{ruby_libdir}/rake
 %{ruby_libdir}/rbconfig
 %exclude %{ruby_libdir}/rbconfig/datadir.rb
-%{ruby_libdir}/rdoc
+%exclude %{ruby_libdir}/rdoc
 %{ruby_libdir}/rexml
 %{ruby_libdir}/rinda
 %{ruby_libdir}/ripper
@@ -386,7 +405,9 @@ make check || :
 %{ruby_libdir}/rbconfig/datadir.rb
 %{ruby_libdir}/gems
 %exclude %{gemdir}/gems/rake-%{rake_version}
+%exclude %{gemdir}/gems/rdoc-%{rdoc_version}
 %exclude %{gemdir}/specifications/rake-%{rake_version}.gemspec
+%exclude %{gemdir}/specifications/rdoc-%{rdoc_version}.gemspec
 
 %files -n rubygem-rake
 %{_bindir}/rake
@@ -401,6 +422,13 @@ make check || :
 %{ruby_libdir}/irb.rb
 %{ruby_libdir}/irb
 %{_mandir}/man1/irb.1*
+
+%files -n rubygem-rdoc
+%{_bindir}/rdoc
+%{ruby_libdir}/rdoc.rb
+%{ruby_libdir}/rdoc
+%{gemdir}/gems/rdoc-%{rdoc_version}
+%{gemdir}/specifications/rdoc-%{rdoc_version}.gemspec
 
 %changelog
 
