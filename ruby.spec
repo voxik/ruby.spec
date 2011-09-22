@@ -96,7 +96,7 @@ Provides:   ruby(abi) = %{ruby_abi}
 %description libs
 This package includes the libruby, necessary to run Ruby.
 
-# TODO: Rename or not not rename to ruby-rubygems?
+# TODO: Rename or not rename to ruby-rubygems?
 %package -n rubygems
 Summary:    The Ruby standard for packaging ruby libraries
 Version:    %{rubygems_version}
@@ -151,7 +151,8 @@ Requires:   ruby(irb) = %{irb_version}
 Provides:   rdoc = %{version}
 Provides:   ri = %{version}
 Provides:   rubygem(rdoc) = %{version}
-Obsoletes:  ri < %{version}
+Obsoletes:  ruby-rdoc < %{version}
+Obsoletes:  ruby-ri < %{version}
 BuildArch:  noarch
 
 %description -n rubygem-rdoc
