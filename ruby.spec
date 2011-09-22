@@ -30,6 +30,9 @@
 %global gemdir %{ruby_libdir}/gems/1.9.1
 
 %global rake_version 0.9.2.2
+# TODO: The IRB has strange versioning. Keep the Ruby's versioning ATM.
+# http://redmine.ruby-lang.org/issues/5313
+%global irb_version %{ruby_version_patch_level}
 
 Summary: An interpreter of object-oriented scripting language
 Name: ruby
@@ -121,10 +124,10 @@ BuildArch:  noarch
 Rake is a Make-like program implemented in Ruby. Tasks and dependencies are
 specified in standard Ruby syntax.
 
+
 %package irb
 Summary:    The Interactive Ruby
-# TODO: The IRB has strange versioning. Keep the Ruby's versioning ATM.
-# http://redmine.ruby-lang.org/issues/5313
+Version:    %{irb_version}
 Group:      Development/Libraries
 Requires:   %{name}-libs = %{ruby_version_patch_level}
 Provides:   irb = %{version}
