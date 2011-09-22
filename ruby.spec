@@ -30,10 +30,10 @@
 %global gemdir %{ruby_libdir}/gems/1.9.1
 
 %global rake_version 0.9.2.2
-%global rdoc_version 3.9.4
 # TODO: The IRB has strange versioning. Keep the Ruby's versioning ATM.
 # http://redmine.ruby-lang.org/issues/5313
 %global irb_version %{ruby_version_patch_level}
+%global rdoc_version 3.9.4
 
 Summary: An interpreter of object-oriented scripting language
 Name: ruby
@@ -143,18 +143,21 @@ from the terminal.
 
 
 %package -n rubygem-rdoc
-Summary:    A tool to generate documentation from Ruby source files
+Summary:    A tool to generate HTML and command-line documentation for Ruby projects
 Version:    %{rdoc_version}
 Group:      Development/Libraries
+License:    GPLv2 and Ruby and MIT
 Requires:   ruby(irb) = %{irb_version}
 Provides:   rdoc = %{version}
+Provides:   ri = %{version}
 Provides:   rubygem(rdoc) = %{version}
+Obsoletes:  ri < %{version}
 BuildArch:  noarch
 
 %description -n rubygem-rdoc
-The rdoc is a tool to generate the documentation from Ruby source files.
-It supports some output formats, like HTML, Ruby interactive reference (ri),
-XML and Windows Help file (chm).
+RDoc produces HTML and command-line documentation for Ruby projects.  RDoc
+includes the 'rdoc' and 'ri' tools for generating and displaying online
+documentation.
 
 
 %prep
@@ -209,13 +212,10 @@ make check || :
 %doc doc/ChangeLog-*
 %doc doc/NEWS-*
 %{_bindir}/erb
-%{_bindir}/ri
 %{_bindir}/ruby
 %{_bindir}/testrb
 %{_mandir}/man1/erb*
-%{_mandir}/man1/ri*
 %{_mandir}/man1/ruby*
-%{_datadir}/ri
 
 # http://fedoraproject.org/wiki/Packaging:Guidelines#Packaging_Static_Libraries
 %exclude %{_libdir}/libruby-static.a
@@ -255,8 +255,8 @@ make check || :
 %dir %{ruby_libdir}
 %{ruby_libdir}/*.rb
 %exclude %{ruby_libdir}/irb.rb
-%exclude %{ruby_libdir}/rdoc.rb
 %exclude %{ruby_libdir}/rake.rb
+%exclude %{ruby_libdir}/rdoc.rb
 %exclude %{ruby_libdir}/rubygems.rb
 %exclude %{ruby_libdir}/ubygems.rb
 %{ruby_libdir}/bigdecimal
@@ -425,10 +425,13 @@ make check || :
 
 %files -n rubygem-rdoc
 %{_bindir}/rdoc
+%{_bindir}/ri
 %{ruby_libdir}/rdoc.rb
 %{ruby_libdir}/rdoc
 %{gemdir}/gems/rdoc-%{rdoc_version}
 %{gemdir}/specifications/rdoc-%{rdoc_version}.gemspec
+%{_mandir}/man1/ri*
+%{_datadir}/ri
 
 %changelog
 
