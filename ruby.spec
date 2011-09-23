@@ -35,6 +35,8 @@
 %global irb_version %{ruby_version_patch_level}
 %global rdoc_version 3.9.4
 
+%global	_normalized_cpu	%(echo %{_target_cpu} | sed 's/^ppc/powerpc/;s/i.86/i386/;s/sparcv./sparc/;s/armv.*/arm/')
+
 Summary: An interpreter of object-oriented scripting language
 Name: ruby
 Version: %{ruby_version_patch_level}
@@ -238,8 +240,8 @@ make check || :
 
 %{_includedir}/ruby.h
 %{_includedir}/ruby
-%dir %{_includedir}/%{_target}
-%{_includedir}/%{_target}/ruby
+%dir %{_includedir}/%{_normalized_cpu}-%{_target_os}
+%{_includedir}/%{_normalized_cpu}-%{_target_os}/ruby
 
 %{_libdir}/libruby.so
 %dir %{_libdir}/pkgconfig
