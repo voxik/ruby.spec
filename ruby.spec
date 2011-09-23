@@ -78,8 +78,7 @@ Summary:    A Ruby development environment
 Group:      Development/Languages
 # Requires:   %{name}-libs = %{version}-%{release}
 Requires:   %{name}%{?_isa} = %{version}-%{release}
-Provides:   ruby(devel) = %{major_minor_version}
-Provides:   ruby(devel) = %{ruby_version}
+Provides:   ruby(devel) = %{ruby_version_patch_level}-%{release}
 
 %description devel
 Header files and libraries for building an extension library for the
@@ -104,8 +103,8 @@ Group:      Development/Libraries
 License:    Ruby or MIT
 Requires:   %{name}-libs = %{ruby_version_patch_level}
 Requires:   rubygem(rdoc) = %{rdoc_version}
-Provides:   gem = %{version}
-Provides:   ruby(rubygems) = %{version}
+Provides:   gem = %{version}-%{release}
+Provides:   ruby(rubygems) = %{version}-%{release}
 BuildArch:  noarch
 
 %description -n rubygems
@@ -119,8 +118,8 @@ Version:    %{rake_version}
 Group:      Development/Libraries
 License:    Ruby or MIT
 Requires:   ruby(rubygems) = %{rubygems_version}
-Provides:   rake = %{version}
-Provides:   rubygem(rake) = %{version}
+Provides:   rake = %{version}-%{release}
+Provides:   rubygem(rake) = %{version}-%{release}
 BuildArch:  noarch
 
 %description -n rubygem-rake
@@ -133,8 +132,8 @@ Summary:    The Interactive Ruby
 Version:    %{irb_version}
 Group:      Development/Libraries
 Requires:   %{name}-libs = %{ruby_version_patch_level}
-Provides:   irb = %{version}
-Provides:   ruby(irb) = %{version}
+Provides:   irb = %{version}-%{release}
+Provides:   ruby(irb) = %{version}-%{release}
 BuildArch:  noarch
 
 %description irb
@@ -148,9 +147,9 @@ Version:    %{rdoc_version}
 Group:      Development/Libraries
 License:    GPLv2 and Ruby and MIT
 Requires:   ruby(irb) = %{irb_version}
-Provides:   rdoc = %{version}
-Provides:   ri = %{version}
-Provides:   rubygem(rdoc) = %{version}
+Provides:   rdoc = %{version}-%{release}
+Provides:   ri = %{version}-%{release}
+Provides:   rubygem(rdoc) = %{version}-%{release}
 Obsoletes:  ruby-rdoc < %{version}
 Obsoletes:  ruby-ri < %{version}
 BuildArch:  noarch
@@ -165,6 +164,7 @@ documentation.
 Summary:    Tcl/Tk interface for scripting language Ruby
 Group:      Development/Languages
 Requires:   %{name}-libs = %{ruby_version_patch_level}
+Provides:   ruby(tcltk) = %{ruby_version_patch_level}-%{release}
 
 %description tcltk
 Tcl/Tk interface for the object-oriented scripting language Ruby.
