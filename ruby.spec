@@ -161,6 +161,14 @@ includes the 'rdoc' and 'ri' tools for generating and displaying online
 documentation.
 
 
+%package tcltk
+Summary:    Tcl/Tk interface for scripting language Ruby
+Group:      Development/Languages
+Requires:   %{name}-libs = %{ruby_version_patch_level}
+
+%description tcltk
+Tcl/Tk interface for the object-oriented scripting language Ruby.
+
 %prep
 %setup -q -n %{ruby_archive}
 
@@ -255,10 +263,13 @@ make check || :
 # Platform independent libraries.
 %dir %{ruby_libdir}
 %{ruby_libdir}/*.rb
+%exclude %{ruby_libdir}/*-tk.rb
 %exclude %{ruby_libdir}/irb.rb
 %exclude %{ruby_libdir}/rake.rb
 %exclude %{ruby_libdir}/rdoc.rb
 %exclude %{ruby_libdir}/rubygems.rb
+%exclude %{ruby_libdir}/tcltk.rb
+%exclude %{ruby_libdir}/tk*.rb
 %exclude %{ruby_libdir}/ubygems.rb
 %{ruby_libdir}/bigdecimal
 %{ruby_libdir}/cgi
@@ -289,8 +300,8 @@ make check || :
 %{ruby_libdir}/shell
 %{ruby_libdir}/syck
 %{ruby_libdir}/test
-%{ruby_libdir}/tk
-%{ruby_libdir}/tkextlib
+%exclude %{ruby_libdir}/tk
+%exclude %{ruby_libdir}/tkextlib
 %{ruby_libdir}/uri
 %{ruby_libdir}/webrick
 %{ruby_libdir}/xmlrpc
@@ -394,8 +405,8 @@ make check || :
 %{ruby_libarchdir}/strscan.so
 %{ruby_libarchdir}/syck.so
 %{ruby_libarchdir}/syslog.so
-%{ruby_libarchdir}/tcltklib.so
-%{ruby_libarchdir}/tkutil.so
+%exclude %{ruby_libarchdir}/tcltklib.so
+%exclude %{ruby_libarchdir}/tkutil.so
 %{ruby_libarchdir}/zlib.so
 
 %files -n rubygems
@@ -433,6 +444,15 @@ make check || :
 %{gemdir}/specifications/rdoc-%{rdoc_version}.gemspec
 %{_mandir}/man1/ri*
 %{_datadir}/ri
+
+%files tcltk
+%{ruby_libdir}/*-tk.rb
+%{ruby_libdir}/tcltk.rb
+%{ruby_libdir}/tk*.rb
+%{ruby_libarchdir}/tcltklib.so
+%{ruby_libarchdir}/tkutil.so
+%{ruby_libdir}/tk
+%{ruby_libdir}/tkextlib
 
 %changelog
 
