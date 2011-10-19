@@ -26,7 +26,7 @@ diff --git a/configure.in b/configure.in
 index 83e5d76..e6dc38c 100644
 --- a/configure.in
 +++ b/configure.in
-@@ -2792,6 +2792,15 @@ else
+@@ -2783,6 +2783,15 @@ else
      RUBY_LIB_VERSION="\"${ruby_version}\""
  fi
  
@@ -42,7 +42,7 @@ index 83e5d76..e6dc38c 100644
  AC_ARG_WITH(sitedir,
  	    AS_HELP_STRING([--with-sitedir=DIR], [site libraries in DIR [[RUBY_LIB_PREFIX/site_ruby]]]),
              [sitedir=$withval],
-@@ -2814,16 +2823,25 @@ if test "${LOAD_RELATIVE+set}"; then
+@@ -2805,16 +2814,25 @@ if test "${LOAD_RELATIVE+set}"; then
      AC_DEFINE_UNQUOTED(LOAD_RELATIVE, $LOAD_RELATIVE)
      RUBY_EXEC_PREFIX=""
      RUBY_LIB_PREFIX="`eval echo "$RUBY_LIB_PREFIX" | sed 's|^NONE/|/|;s|^'"$prefix"'/|/|'`"
@@ -68,7 +68,7 @@ index 83e5d76..e6dc38c 100644
  AS_CASE(["$RUBY_SITE_LIB_PATH"],
    ["$RUBY_LIB_PREFIX/"*], [
      RUBY_SITE_LIB_PATH='RUBY_LIB_PREFIX"/'"`expr \"$RUBY_SITE_LIB_PATH\" : \"$pat\"`"'"'
-@@ -2854,6 +2872,7 @@ else
+@@ -2845,6 +2863,7 @@ else
  fi
  AC_DEFINE_UNQUOTED(RUBY_EXEC_PREFIX, "${RUBY_EXEC_PREFIX}")
  AC_DEFINE_UNQUOTED(RUBY_LIB_PREFIX, ${RUBY_LIB_PREFIX})
@@ -76,7 +76,7 @@ index 83e5d76..e6dc38c 100644
  if test "x$SITE_DIR" = xno; then
      AC_DEFINE(NO_RUBY_SITE_LIB)
  else
-@@ -2868,6 +2887,7 @@ fi
+@@ -2859,6 +2878,7 @@ fi
  AC_SUBST(arch)dnl
  AC_SUBST(sitearch)dnl
  AC_SUBST(ruby_version)dnl

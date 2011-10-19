@@ -13,7 +13,7 @@ diff --git a/configure.in b/configure.in
 index 53f0a72..15f3d58 100644
 --- a/configure.in
 +++ b/configure.in
-@@ -2962,6 +2962,17 @@ else
+@@ -2953,6 +2953,17 @@ else
  fi
  AC_SUBST(USE_RUBYGEMS)
  

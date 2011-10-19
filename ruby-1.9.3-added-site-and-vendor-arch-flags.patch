@@ -29,7 +29,7 @@ diff --git a/configure.in b/configure.in
 index 83e5d76..31532bd 100644
 --- a/configure.in
 +++ b/configure.in
-@@ -2810,6 +2810,15 @@ until SITE_DIR=`eval echo \\"${dir}\\"`; test "x${dir}" = "x${SITE_DIR}"; do
+@@ -2801,6 +2801,15 @@ until SITE_DIR=`eval echo \\"${dir}\\"`; test "x${dir}" = "x${SITE_DIR}"; do
      dir="${SITE_DIR}"
  done
  
@@ -45,7 +45,7 @@ index 83e5d76..31532bd 100644
  AC_ARG_WITH(vendordir,
  	    AS_HELP_STRING([--with-vendordir=DIR], [vendor libraries in DIR [[RUBY_LIB_PREFIX/vendor_ruby]]]),
              [vendordir=$withval],
-@@ -2819,19 +2828,32 @@ until VENDOR_DIR=`eval echo \\"${dir}\\"`; test "x${dir}" = "x${VENDOR_DIR}"; do
+@@ -2810,19 +2819,32 @@ until VENDOR_DIR=`eval echo \\"${dir}\\"`; test "x${dir}" = "x${VENDOR_DIR}"; do
      dir="${VENDOR_DIR}"
  done
  
@@ -78,7 +78,7 @@ index 83e5d76..31532bd 100644
  fi
  
  pat=`echo "$RUBY_LIB_PREFIX/" | tr -c '\012' .`'\(.*\)'
-@@ -2849,6 +2871,13 @@ AS_CASE(["$RUBY_SITE_LIB_PATH"],
+@@ -2840,6 +2862,13 @@ AS_CASE(["$RUBY_SITE_LIB_PATH"],
    [
      RUBY_SITE_LIB_PATH="\"${RUBY_SITE_LIB_PATH}\""
      ])
@@ -92,7 +92,7 @@ index 83e5d76..31532bd 100644
  AS_CASE(["$RUBY_VENDOR_LIB_PATH"],
    ["$RUBY_LIB_PREFIX/"*], [
      RUBY_VENDOR_LIB_PATH='RUBY_LIB_PREFIX"/'"`expr \"$RUBY_VENDOR_LIB_PATH\" : \"$pat\"`"'"'
-@@ -2856,6 +2885,13 @@ AS_CASE(["$RUBY_VENDOR_LIB_PATH"],
+@@ -2847,6 +2876,13 @@ AS_CASE(["$RUBY_VENDOR_LIB_PATH"],
    [
      RUBY_VENDOR_LIB_PATH="\"${RUBY_VENDOR_LIB_PATH}\""
      ])
@@ -106,7 +106,7 @@ index 83e5d76..31532bd 100644
  pat=`echo "$RUBY_EXEC_PREFIX/" | tr -c '\012' .`'\(.*\)'
  AS_CASE(["$RUBY_LIB_PREFIX"],
    ["$RUBY_EXEC_PREFIX/"*], [
-@@ -2877,19 +2913,23 @@ if test "x$SITE_DIR" = xno; then
+@@ -2868,19 +2904,23 @@ if test "x$SITE_DIR" = xno; then
      AC_DEFINE(NO_RUBY_SITE_LIB)
  else
      AC_DEFINE_UNQUOTED(RUBY_SITE_LIB, ${RUBY_SITE_LIB_PATH})
