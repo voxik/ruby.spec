@@ -52,6 +52,9 @@ Patch0: ruby-1.9.3-disable-versioned-paths.patch
 Patch1: ruby-1.9.3-arch-specific-dir.patch
 # http://redmine.ruby-lang.org/issues/5281
 Patch2: ruby-1.9.3-added-site-and-vendor-arch-flags.patch
+# Force multiarch directories for i.86 to be always named i386. This solves
+# some differencies in build between Fedora and RHEL.
+Patch3: ruby-1.9.3-always-use-i386.patch
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 Requires: ruby(rubygems) >= %{rubygems_version}
@@ -177,6 +180,7 @@ Tcl/Tk interface for the object-oriented scripting language Ruby.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 autoconf
