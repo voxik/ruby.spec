@@ -25,7 +25,7 @@
 %global ruby_vendorlibdir %{_datadir}/ruby/%{ruby_vendordir}
 %global ruby_vendorarchdir %{_libdir}/ruby/%{ruby_vendordir}
 
-%global rubygems_version 1.8.10
+%global rubygems_version 1.8.11
 # TODO: Is this right location for gems?
 %global gemdir %{ruby_libdir}/gems/1.9.1
 
