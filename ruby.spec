@@ -40,7 +40,7 @@
 Summary: An interpreter of object-oriented scripting language
 Name: ruby
 Version: %{ruby_version_patch_level}
-Release: rc1.1%{?dist}
+Release: 1%{?dist}
 Group: Development/Languages
 License: Ruby or BSD
 URL: http://ruby-lang.org/
@@ -468,5 +468,5 @@ make check || :
 %{ruby_libdir}/tkextlib
 
 %changelog
-* Tue Sep 23 2011 Vít Ondruch <vondruch@redhat.com> - 1.9.3.0-rc1.1
+* Tue Sep 23 2011 Vít Ondruch <vondruch@redhat.com> - 1.9.3.0-1
 - Initial package
