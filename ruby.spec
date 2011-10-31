@@ -211,6 +211,24 @@ make %{?_smp_mflags} COPY="cp -p"
 rm -rf %{buildroot}
 make install DESTDIR=%{buildroot}
 
+# Dump the macros into macro.ruby to use them to build other Ruby libraries.
+mkdir -p %{buildroot}%{_sysconfdir}/rpm
+cat >> %{buildroot}%{_sysconfdir}/rpm/ruby.macros << \EOF
+%%global _ruby_libdir %{_datadir}/%{name}
+%%global _ruby_libarchdir %{_libdir}/%{name}
+
+# This is the local lib/arch and should not be used for packaging.
+%%global _ruby_sitedir site_ruby
+%%global _ruby_sitelibdir %{_prefix}/local/share/ruby/%{ruby_sitedir}
+%%global _ruby_sitearchdir %{_prefix}/local/%{_lib}/ruby/%{ruby_sitedir}
+
+# This is the general location for libs/archs compatible with all
+# or most of the Ruby versions available in the Fedora repositories.
+%%global _ruby_vendordir vendor_ruby
+%%global _ruby_vendorlibdir %{_datadir}/ruby/%{ruby_vendordir}
+%%global _ruby_vendorarchdir %{_libdir}/ruby/%{ruby_vendordir}
+EOF
+
 %check
 # Unfortunately not all tests passes :/ Moreover the test suite is unstable.
 # 10089 tests, 2208914 assertions, 3 failures, 0 errors, 45 skips
@@ -248,6 +266,8 @@ make check || :
 %doc LEGAL
 %doc README.EXT
 %lang(ja) %doc README.EXT.ja
+
+%{_sysconfdir}/rpm/ruby.macros
 
 %{_includedir}/ruby.h
 %{_includedir}/ruby
