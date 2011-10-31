@@ -1,6 +1,6 @@
 --- a/configure.in.orig	2011-10-18 08:56:21.587594685 +0200
 +++ b/configure.in	2011-10-18 08:56:59.751593321 +0200
-@@ -2934,6 +2934,8 @@
+@@ -2925,6 +2925,8 @@
  configure_args=$ac_configure_args
  AC_SUBST(configure_args)dnl
  
