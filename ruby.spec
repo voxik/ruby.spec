@@ -26,8 +26,12 @@
 %global ruby_vendorarchdir %{_libdir}/ruby/%{ruby_vendordir}
 
 %global rubygems_version 1.8.11
-# TODO: Is this right location for gems?
-%global gemdir %{ruby_libdir}/gems/1.9.1
+
+# Specify custom locations for RubyGems.
+%global gem_rootdir %{_datadir}/rubygems
+%global gem_libdir %{gem_rootdir}/lib
+%global gem_dir %{gem_rootdir}/gems
+%global gem_instdir %{gem_rootdir}/gems/%{gemname}-%{version}
 
 %global rake_version 0.9.2.2
 # TODO: The IRB has strange versioning. Keep the Ruby's versioning ATM.
@@ -45,6 +49,7 @@ Group: Development/Languages
 License: Ruby or BSD
 URL: http://ruby-lang.org/
 Source0: ftp://ftp.ruby-lang.org/pub/%{name}/%{major_minor_version}/%{ruby_archive}.tar.gz
+Source1: operating_system.rb
 
 # http://redmine.ruby-lang.org/issues/5231
 Patch0: ruby-1.9.3-disable-versioned-paths.patch
@@ -193,6 +198,8 @@ Tcl/Tk interface for the object-oriented scripting language Ruby.
 %build
 autoconf
 
+# TODO: Search path should be probably converted into patch, since
+# the gem directory should have lower priority.
 %configure \
         --with-rubylibprefix='%{ruby_libdir}' \
         --with-archdir='%{ruby_libarchdir}' \
@@ -201,6 +208,7 @@ autoconf
         --with-vendordir='%{ruby_vendorlibdir}' \
         --with-vendorarchdir='%{ruby_vendorarchdir}' \
         --with-rubyhdrdir='%{_includedir}' \
+        --with-search-path='%{gem_libdir}' \
         --disable-rpath \
         --enable-shared \
         --disable-versioned-paths
@@ -229,6 +237,17 @@ cat >> %{buildroot}%{_sysconfdir}/rpm/ruby.macros << \EOF
 %%global ruby_vendorlibdir %{_datadir}/ruby/%{ruby_vendordir}
 %%global ruby_vendorarchdir %{_libdir}/ruby/%{ruby_vendordir}
 EOF
+
+# Move RubyGems library into common direcotry, out of Ruby directory structure.
+mkdir -p %{buildroot}%{gem_libdir}/rbconfig
+for i in rubygems rubygems.rb ubygems.rb rbconfig/datadir.rb; do
+  mv %{buildroot}%{ruby_libdir}/${i} %{buildroot}%{gem_libdir}/${i}
+done
+mv %{buildroot}%{ruby_libdir}/gems/%{ruby_abi} %{buildroot}%{gem_dir}
+
+# Install custom operating_system.rb.
+mkdir -p %{buildroot}%{gem_libdir}/rubygems/defaults
+cp %{SOURCE1} %{buildroot}%{gem_libdir}/rubygems/defaults
 
 %check
 # Unfortunately not all tests passes :/ Moreover the test suite is unstable.
@@ -301,10 +320,8 @@ make check || :
 %exclude %{ruby_libdir}/irb.rb
 %exclude %{ruby_libdir}/rake.rb
 %exclude %{ruby_libdir}/rdoc.rb
-%exclude %{ruby_libdir}/rubygems.rb
 %exclude %{ruby_libdir}/tcltk.rb
 %exclude %{ruby_libdir}/tk*.rb
-%exclude %{ruby_libdir}/ubygems.rb
 %{ruby_libdir}/bigdecimal
 %{ruby_libdir}/cgi
 %{ruby_libdir}/date
@@ -325,7 +342,6 @@ make check || :
 %{ruby_libdir}/racc
 %exclude %{ruby_libdir}/rake
 %{ruby_libdir}/rbconfig
-%exclude %{ruby_libdir}/rbconfig/datadir.rb
 %exclude %{ruby_libdir}/rdoc
 %{ruby_libdir}/rexml
 %{ruby_libdir}/rinda
@@ -445,22 +461,20 @@ make check || :
 
 %files -n rubygems
 %{_bindir}/gem
-%{ruby_libdir}/rubygems
-%{ruby_libdir}/rubygems.rb
-%{ruby_libdir}/ubygems.rb
-%{ruby_libdir}/rbconfig/datadir.rb
-%{ruby_libdir}/gems
-%exclude %{gemdir}/gems/rake-%{rake_version}
-%exclude %{gemdir}/gems/rdoc-%{rdoc_version}
-%exclude %{gemdir}/specifications/rake-%{rake_version}.gemspec
-%exclude %{gemdir}/specifications/rdoc-%{rdoc_version}.gemspec
+%dir %{gem_rootdir}
+%{gem_libdir}
+%{gem_dir}
+%exclude %{gem_dir}/gems/rake-%{rake_version}
+%exclude %{gem_dir}/gems/rdoc-%{rdoc_version}
+%exclude %{gem_dir}/specifications/rake-%{rake_version}.gemspec
+%exclude %{gem_dir}/specifications/rdoc-%{rdoc_version}.gemspec
 
 %files -n rubygem-rake
 %{_bindir}/rake
 %{ruby_libdir}/rake.rb
 %{ruby_libdir}/rake
-%{gemdir}/gems/rake-%{rake_version}
-%{gemdir}/specifications/rake-%{rake_version}.gemspec
+%{gem_dir}/gems/rake-%{rake_version}
+%{gem_dir}/specifications/rake-%{rake_version}.gemspec
 %{_mandir}/man1/rake.1*
 
 %files irb
@@ -474,8 +488,8 @@ make check || :
 %{_bindir}/ri
 %{ruby_libdir}/rdoc.rb
 %{ruby_libdir}/rdoc
-%{gemdir}/gems/rdoc-%{rdoc_version}
-%{gemdir}/specifications/rdoc-%{rdoc_version}.gemspec
+%{gem_dir}/gems/rdoc-%{rdoc_version}
+%{gem_dir}/specifications/rdoc-%{rdoc_version}.gemspec
 %{_mandir}/man1/ri*
 %{_datadir}/ri
 
