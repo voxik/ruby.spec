@@ -153,6 +153,7 @@ Summary:    A tool to generate HTML and command-line documentation for Ruby proj
 Version:    %{rdoc_version}
 Group:      Development/Libraries
 License:    GPLv2 and Ruby and MIT
+Requires:   ruby(rubygems) = %{rubygems_version}
 Requires:   ruby(irb) = %{irb_version}
 Provides:   rdoc = %{version}-%{release}
 Provides:   ri = %{version}-%{release}
