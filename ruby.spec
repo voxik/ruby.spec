@@ -225,7 +225,7 @@ make install DESTDIR=%{buildroot}
 
 # Dump the macros into macro.ruby to use them to build other Ruby libraries.
 mkdir -p %{buildroot}%{_sysconfdir}/rpm
-cat >> %{buildroot}%{_sysconfdir}/rpm/ruby.macros << \EOF
+cat >> %{buildroot}%{_sysconfdir}/rpm/macros.ruby << \EOF
 %%global ruby_libdir %{_datadir}/%{name}
 %%global ruby_libarchdir %{_libdir}/%{name}
 
@@ -290,7 +290,7 @@ make check || :
 %doc README.EXT
 %lang(ja) %doc README.EXT.ja
 
-%config(noreplace) %{_sysconfdir}/rpm/ruby.macros
+%config(noreplace) %{_sysconfdir}/rpm/macros.ruby
 
 %{_includedir}/ruby.h
 %{_includedir}/ruby
