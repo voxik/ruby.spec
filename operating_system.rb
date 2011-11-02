@@ -31,7 +31,7 @@ module Gem
       if Process.uid == 0
         File.join ['/', 'usr', 'local', 'bin']
       else
-        File.join [File.expand_path('~'), 'bin']
+        File.join [Dir.home, 'bin']
       end
     end
   end
