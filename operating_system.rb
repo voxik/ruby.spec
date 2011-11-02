@@ -1,7 +1,7 @@
 module Gem
   class << self
     def root_user_dir
-      File.join ['/', 'usr', 'local', 'gems']
+      File.join ['/', 'usr', 'local', 'share', 'gems']
     end
 
     def root_bindir
