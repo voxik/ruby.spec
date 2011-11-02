@@ -226,19 +226,19 @@ make install DESTDIR=%{buildroot}
 # Dump the macros into macro.ruby to use them to build other Ruby libraries.
 mkdir -p %{buildroot}%{_sysconfdir}/rpm
 cat >> %{buildroot}%{_sysconfdir}/rpm/macros.ruby << \EOF
-%%global ruby_libdir %{_datadir}/%{name}
-%%global ruby_libarchdir %{_libdir}/%{name}
+%%ruby_libdir %{_datadir}/%{name}
+%%ruby_libarchdir %{_libdir}/%{name}
 
 # This is the local lib/arch and should not be used for packaging.
-%%global ruby_sitedir site_ruby
-%%global ruby_sitelibdir %{_prefix}/local/share/ruby/%{ruby_sitedir}
-%%global ruby_sitearchdir %{_prefix}/local/%{_lib}/ruby/%{ruby_sitedir}
+%%ruby_sitedir site_ruby
+%%ruby_sitelibdir %{_prefix}/local/share/ruby/%{ruby_sitedir}
+%%ruby_sitearchdir %{_prefix}/local/%{_lib}/ruby/%{ruby_sitedir}
 
 # This is the general location for libs/archs compatible with all
 # or most of the Ruby versions available in the Fedora repositories.
-%%global ruby_vendordir vendor_ruby
-%%global ruby_vendorlibdir %{_datadir}/ruby/%{ruby_vendordir}
-%%global ruby_vendorarchdir %{_libdir}/ruby/%{ruby_vendordir}
+%%ruby_vendordir vendor_ruby
+%%ruby_vendorlibdir %{_datadir}/ruby/%{ruby_vendordir}
+%%ruby_vendorarchdir %{_libdir}/ruby/%{ruby_vendordir}
 EOF
 
 # Move RubyGems library into common direcotry, out of Ruby directory structure.
