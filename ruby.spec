@@ -61,6 +61,9 @@ Patch2: ruby-1.9.3-added-site-and-vendor-arch-flags.patch
 Patch3: ruby-1.9.3-always-use-i386.patch
 # http://redmine.ruby-lang.org/issues/5465
 Patch4: ruby-1.9.3-fix-s390x-build.patch
+# Fix the uninstaller, so that it doesn't say that gem doesn't exist
+# when it exists outside of the GEM_HOME (already fixed in the upstream)
+Patch5: ruby-1.9.3-rubygems-1.8.11-uninstaller.patch
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 Requires: ruby(rubygems) >= %{rubygems_version}
@@ -193,6 +196,7 @@ Tcl/Tk interface for the object-oriented scripting language Ruby.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 autoconf
