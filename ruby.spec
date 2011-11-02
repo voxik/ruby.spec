@@ -286,7 +286,7 @@ make check || :
 %doc README.EXT
 %lang(ja) %doc README.EXT.ja
 
-%{_sysconfdir}/rpm/ruby.macros
+%config(noreplace) %{_sysconfdir}/rpm/ruby.macros
 
 %{_includedir}/ruby.h
 %{_includedir}/ruby
