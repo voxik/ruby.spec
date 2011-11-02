@@ -9,7 +9,7 @@ module Gem
     end
 
     def rpm_gem_dir
-      File.join [ConfigMap[:datadir], 'rubygems', 'gems']
+      File.join [ConfigMap[:datadir], 'gems']
     end
 
     def default_dir

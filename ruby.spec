@@ -28,10 +28,9 @@
 %global rubygems_version 1.8.11
 
 # Specify custom locations for RubyGems.
-%global gem_rootdir %{_datadir}/rubygems
-%global gem_libdir %{gem_rootdir}/lib
-%global gem_dir %{gem_rootdir}/gems
-%global gem_instdir %{gem_rootdir}/gems/%{gemname}-%{version}
+%global gem_libdir %{_datadir}/rubygems
+%global gem_dir %{_datadir}/gems
+%global gem_instdir %{gem_dir}/gems/%{gemname}-%{version}
 
 %global rake_version 0.9.2.2
 # TODO: The IRB has strange versioning. Keep the Ruby's versioning ATM.
@@ -461,7 +460,6 @@ make check || :
 
 %files -n rubygems
 %{_bindir}/gem
-%dir %{gem_rootdir}
 %{gem_libdir}
 %{gem_dir}
 %exclude %{gem_dir}/gems/rake-%{rake_version}
