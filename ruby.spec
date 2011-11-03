@@ -125,6 +125,18 @@ RubyGems is the Ruby standard for publishing and managing third party
 libraries.
 
 
+%package -n rubygems-devel
+Summary:    Macros and development tools for packagin RubyGems
+Version:    %{rubygems_version}
+Group:      Development/Libraries
+License:    Ruby or MIT
+Requires:   ruby(rubygems) = %{version}-%{release}
+BuildArch:  noarch
+
+%description -n rubygems-devel
+Macros and development tools for packagin RubyGems.
+
+
 %package -n rubygem-rake
 Summary:    Ruby based make-like utility
 Version:    %{rake_version}
@@ -238,6 +250,12 @@ cat >> %{buildroot}%{_sysconfdir}/rpm/macros.ruby << \EOF
 %%ruby_vendordir vendor_ruby
 %%ruby_vendorlibdir %{_datadir}/ruby/%{ruby_vendordir}
 %%ruby_vendorarchdir %{_libdir}/ruby/%{ruby_vendordir}
+EOF
+
+cat >> %{buildroot}%{_sysconfdir}/rpm/macros.rubygems << \EOF
+# Specify custom locations for RubyGems.
+%%gem_dir %{_datadir}/gems
+%%gem_instdir %{gem_dir}/gems/%{gemname}-%{version}
 EOF
 
 # Move RubyGems library into common direcotry, out of Ruby directory structure.
@@ -469,6 +487,9 @@ make check || :
 %exclude %{gem_dir}/gems/rdoc-%{rdoc_version}
 %exclude %{gem_dir}/specifications/rake-%{rake_version}.gemspec
 %exclude %{gem_dir}/specifications/rdoc-%{rdoc_version}.gemspec
+
+%files -n rubygems-devel
+%config(noreplace) %{_sysconfdir}/rpm/macros.rubygems
 
 %files -n rubygem-rake
 %{_bindir}/rake
