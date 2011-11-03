@@ -92,7 +92,6 @@ Summary:    A Ruby development environment
 Group:      Development/Languages
 # Requires:   %{name}-libs = %{version}-%{release}
 Requires:   %{name}%{?_isa} = %{version}-%{release}
-Provides:   ruby(devel) = %{ruby_version_patch_level}-%{release}
 
 %description devel
 Header files and libraries for building an extension library for the
