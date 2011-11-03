@@ -253,9 +253,15 @@ cat >> %{buildroot}%{_sysconfdir}/rpm/macros.ruby << \EOF
 EOF
 
 cat >> %{buildroot}%{_sysconfdir}/rpm/macros.rubygems << \EOF
-# Specify custom locations for RubyGems.
+# The RubyGems root folder.
 %%gem_dir %{_datadir}/gems
-%%gem_instdir %{gem_dir}/gems/%{gemname}-%{version}
+
+# Common gem locations and files.
+%%gem_instdir %%{gem_dir}/gems/%%{gem_name}-%%{version}
+%%gem_libdir %%{gem_instdir}/lib
+%%gem_cache %%{gem_dir}/cache/%%{gem_name}-%%{version}.gem
+%%gem_spec %%{gem_dir}/specifications/%%{gem_name}-%%{version}.gemspec
+%%gem_docdir %%%{gem_dir}/doc/%{gemname}-%{version}
 EOF
 
 # Move RubyGems library into common direcotry, out of Ruby directory structure.
