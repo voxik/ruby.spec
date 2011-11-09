@@ -63,3 +63,14 @@
      msg << 'Continue with Uninstall?'
      return ask_yes_no(msg.join("\n"), true)
    end
+
+--- ruby-1.9.3-p0/test/rubygems/test_gem_uninstaller.rb.orig	2011-11-03 08:58:31.411272176 +0100
++++ ruby-1.9.3-p0/test/rubygems/test_gem_uninstaller.rb	2011-11-03 08:58:43.010272351 +0100
+@@ -225,7 +225,7 @@
+ 
+     uninstaller = Gem::Uninstaller.new('a')
+ 
+-    use_ui Gem::MockGemUi.new("2\n") do
++    use_ui Gem::MockGemUi.new("2\ny\n") do
+       uninstaller.uninstall
+     end
