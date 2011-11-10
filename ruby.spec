@@ -69,6 +69,9 @@ Patch4: ruby-1.9.3-fix-s390x-build.patch
 Patch5: ruby-1.9.3-rubygems-1.8.11-uninstaller.patch
 # http://redmine.ruby-lang.org/issues/5135 - see comment 29
 Patch6: ruby-1.9.3-webrick-test-fix.patch
+# Already fixed upstream:
+# https://github.com/ruby/ruby/commit/f212df564a4e1025f9fb019ce727022a97bfff53
+Patch7: ruby-1.9.3-bignum-test-fix.patch
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 Requires: ruby(rubygems) >= %{rubygems_version}
@@ -214,6 +217,7 @@ Tcl/Tk interface for the object-oriented scripting language Ruby.
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 %build
 autoconf
