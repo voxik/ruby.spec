@@ -286,10 +286,7 @@ mkdir -p %{buildroot}%{rubygems_dir}/rubygems/defaults
 cp %{SOURCE1} %{buildroot}%{rubygems_dir}/rubygems/defaults
 
 %check
-# Unfortunately not all tests passes :/ Moreover the test suite is unstable.
-# 10089 tests, 2208914 assertions, 3 failures, 0 errors, 45 skips
-# 10089 tests, 2208922 assertions, 7 failures, 0 errors, 45 skips
-make check || :
+make check
 
 %post libs -p /sbin/ldconfig
 
