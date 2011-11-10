@@ -257,7 +257,7 @@ EOF
 
 cat >> %{buildroot}%{_sysconfdir}/rpm/macros.rubygems << \EOF
 # The RubyGems root folder.
-%%gem_dir %{_datadir}/gems
+%%gem_dir %{gem_dir}
 
 # Common gem locations and files.
 %%gem_instdir %%{gem_dir}/gems/%%{gem_name}-%%{version}
