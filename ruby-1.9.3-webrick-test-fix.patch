@@ -1,0 +1,20 @@
+--- ruby-1.9.3-p0/test/webrick/test_cgi.rb.orig	2011-11-09 13:11:29.408184265 +0100
++++ ruby-1.9.3-p0/test/webrick/test_cgi.rb	2011-11-10 07:54:17.310949540 +0100
+@@ -14,6 +14,7 @@
+         def req.meta_vars
+           meta = super
+           meta["RUBYLIB"] = $:.join(File::PATH_SEPARATOR)
++          meta["LD_LIBRARY_PATH"] = ENV['LD_LIBRARY_PATH']
+           return meta
+         end
+       },
+--- ruby-1.9.3-p0/test/webrick/test_filehandler.rb.orig	2011-11-10 08:10:52.556346729 +0100
++++ ruby-1.9.3-p0/test/webrick/test_filehandler.rb	2011-11-10 08:11:15.085313049 +0100
+@@ -252,6 +252,7 @@
+         def req.meta_vars
+           meta = super
+           meta["RUBYLIB"] = $:.join(File::PATH_SEPARATOR)
++          meta["LD_LIBRARY_PATH"] = ENV['LD_LIBRARY_PATH']
+           return meta
+         end
+       },
