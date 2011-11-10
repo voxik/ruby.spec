@@ -27,10 +27,8 @@
 
 %global rubygems_version 1.8.11
 
-# Specify custom location for RubyGems.
-%global rubygems_dir %{ruby_vendorlibdir}
-
-# Specify custom gems locations.
+# Specify custom locations for RubyGems.
+%global gem_libdir %{_datadir}/rubygems
 %global gem_dir %{_datadir}/gems
 %global gem_instdir %{gem_dir}/gems/%{gemname}-%{version}
 
@@ -224,6 +222,7 @@ autoconf
         --with-vendordir='%{ruby_vendorlibdir}' \
         --with-vendorarchdir='%{ruby_vendorarchdir}' \
         --with-rubyhdrdir='%{_includedir}' \
+        --with-search-path='%{gem_libdir}' \
         --disable-rpath \
         --enable-shared \
         --disable-versioned-paths
@@ -266,15 +265,15 @@ cat >> %{buildroot}%{_sysconfdir}/rpm/macros.rubygems << \EOF
 EOF
 
 # Move RubyGems library into common direcotry, out of Ruby directory structure.
-mkdir -p %{buildroot}%{rubygems_dir}/rbconfig
+mkdir -p %{buildroot}%{gem_libdir}/rbconfig
 for i in rubygems rubygems.rb ubygems.rb rbconfig/datadir.rb; do
-  mv %{buildroot}%{ruby_libdir}/${i} %{buildroot}%{rubygems_dir}/${i}
+  mv %{buildroot}%{ruby_libdir}/${i} %{buildroot}%{gem_libdir}/${i}
 done
 mv %{buildroot}%{ruby_libdir}/gems/%{ruby_abi} %{buildroot}%{gem_dir}
 
 # Install custom operating_system.rb.
-mkdir -p %{buildroot}%{rubygems_dir}/rubygems/defaults
-cp %{SOURCE1} %{buildroot}%{rubygems_dir}/rubygems/defaults
+mkdir -p %{buildroot}%{gem_libdir}/rubygems/defaults
+cp %{SOURCE1} %{buildroot}%{gem_libdir}/rubygems/defaults
 
 %check
 # Unfortunately not all tests passes :/ Moreover the test suite is unstable.
@@ -488,7 +487,7 @@ make check || :
 
 %files -n rubygems
 %{_bindir}/gem
-%{rubygems_dir}
+%{gem_libdir}
 %{gem_dir}
 %exclude %{gem_dir}/gems/rake-%{rake_version}
 %exclude %{gem_dir}/gems/rdoc-%{rdoc_version}
