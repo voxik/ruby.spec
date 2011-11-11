@@ -72,6 +72,7 @@ Patch6: ruby-1.9.3-webrick-test-fix.patch
 # Already fixed upstream:
 # https://github.com/ruby/ruby/commit/f212df564a4e1025f9fb019ce727022a97bfff53
 Patch7: ruby-1.9.3-bignum-test-fix.patch
+Patch8: ruby-1.9.3-custom-rubygems-location.patch
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 Requires: ruby(rubygems) >= %{rubygems_version}
@@ -218,6 +219,7 @@ Tcl/Tk interface for the object-oriented scripting language Ruby.
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
 
 %build
 autoconf
@@ -232,7 +234,7 @@ autoconf
         --with-vendordir='%{ruby_vendorlibdir}' \
         --with-vendorarchdir='%{ruby_vendorarchdir}' \
         --with-rubyhdrdir='%{_includedir}' \
-        --with-search-path='%{rubygems_dir}' \
+        --with-rubygemsdir='%{rubygems_dir}' \
         --disable-rpath \
         --enable-shared \
         --disable-versioned-paths
@@ -274,16 +276,12 @@ cat >> %{buildroot}%{_sysconfdir}/rpm/macros.rubygems << \EOF
 %%gem_docdir %%%{gem_dir}/doc/%{gemname}-%{version}
 EOF
 
-# Move RubyGems library into common direcotry, out of Ruby directory structure.
-mkdir -p %{buildroot}%{rubygems_dir}/rbconfig
-for i in rubygems rubygems.rb ubygems.rb rbconfig/datadir.rb; do
-  mv %{buildroot}%{ruby_libdir}/${i} %{buildroot}%{rubygems_dir}/${i}
-done
-mv %{buildroot}%{ruby_libdir}/gems/%{ruby_abi} %{buildroot}%{gem_dir}
-
 # Install custom operating_system.rb.
 mkdir -p %{buildroot}%{rubygems_dir}/rubygems/defaults
 cp %{SOURCE1} %{buildroot}%{rubygems_dir}/rubygems/defaults
+
+# Move gems root into common direcotry, out of Ruby directory structure.
+mv %{buildroot}%{ruby_libdir}/gems/%{ruby_abi} %{buildroot}%{gem_dir}
 
 %check
 make check
