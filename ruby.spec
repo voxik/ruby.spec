@@ -273,7 +273,7 @@ cat >> %{buildroot}%{_sysconfdir}/rpm/macros.rubygems << \EOF
 %%gem_libdir %%{gem_instdir}/lib
 %%gem_cache %%{gem_dir}/cache/%%{gem_name}-%%{version}.gem
 %%gem_spec %%{gem_dir}/specifications/%%{gem_name}-%%{version}.gemspec
-%%gem_docdir %%{gem_dir}/doc/%%{gemname}-%%{version}
+%%gem_docdir %%{gem_dir}/doc/%%{gem_name}-%%{version}
 EOF
 
 # Install custom operating_system.rb.
