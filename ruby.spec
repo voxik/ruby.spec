@@ -72,7 +72,12 @@ Patch6: ruby-1.9.3-webrick-test-fix.patch
 # Already fixed upstream:
 # https://github.com/ruby/ruby/commit/f212df564a4e1025f9fb019ce727022a97bfff53
 Patch7: ruby-1.9.3-bignum-test-fix.patch
+# Allows to install RubyGems into custom directory, outside of Ruby's tree.
+# http://redmine.ruby-lang.org/issues/5617
 Patch8: ruby-1.9.3-custom-rubygems-location.patch
+# Add support for installing binary extensions according to FHS.
+# https://github.com/rubygems/rubygems/issues/210
+Patch9: rubygems-1.8.11-binary-extensions.patch
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 Requires: ruby(rubygems) >= %{rubygems_version}
@@ -220,6 +225,7 @@ Tcl/Tk interface for the object-oriented scripting language Ruby.
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 
 %build
 autoconf

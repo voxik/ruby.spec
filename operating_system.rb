@@ -26,15 +26,16 @@ module Gem
 
     ##
     # For each location provides set of directories for binaries (:bin_dir)
-    # and platform independent (:gem_dir) files.
+    # platform independent (:gem_dir) and dependent (:ext_dir) files.
 
     def default_dirs
-      @default_dir ||= Hash[default_locations.collect do |destination, path|
-          [destination, {
-            :bin_dir => File.join(path, ConfigMap[:bindir].split(File::SEPARATOR).last),
-            :gem_dir => File.join(path, ConfigMap[:datadir].split(File::SEPARATOR).last, 'gems'),
-          }]
-        end]
+      @default_dirs ||= Hash[default_locations.collect do |destination, path|
+        [destination, {
+          :bin_dir => File.join(path, ConfigMap[:bindir].split(File::SEPARATOR).last),
+          :gem_dir => File.join(path, ConfigMap[:datadir].split(File::SEPARATOR).last, 'gems'),
+          :ext_dir => File.join(path, ConfigMap[:libdir].split(File::SEPARATOR).last, 'gems')
+        }]
+      end]
     end
 
     ##
@@ -59,6 +60,11 @@ module Gem
       else
         File.join [Dir.home, 'bin']
       end
+    end
+
+    def default_ext_dir_for base_dir
+      dirs = Gem.default_dirs.detect {|location, paths| paths[:gem_dir] == base_dir}
+      dirs && File.join(dirs.last[:ext_dir], 'exts')
     end
   end
 end
