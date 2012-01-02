@@ -20,7 +20,7 @@ index b1bc951..91c5d0d 100644
  done
  
 +AC_ARG_WITH(rubygemsdir,
-+           AS_HELP_STRING([--with-rubygemsdir=DIR], [custom rubygems directory]]),
++           AS_HELP_STRING([--with-rubygemsdir=DIR], [custom rubygems directory]),
 +            [rubygemsdir=$withval])
 +if test "$rubygemsdir" != ""; then
 +    AC_DEFINE_UNQUOTED(RUBYGEMS_DIR,"$rubygemsdir")
