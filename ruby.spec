@@ -403,14 +403,17 @@ make check
 %{ruby_libarchdir}/curses.so
 %{ruby_libarchdir}/date_core.so
 %{ruby_libarchdir}/dbm.so
+%dir %{ruby_libarchdir}/digest
 %{ruby_libarchdir}/digest.so
 %{ruby_libarchdir}/digest/bubblebabble.so
 %{ruby_libarchdir}/digest/md5.so
 %{ruby_libarchdir}/digest/rmd160.so
 %{ruby_libarchdir}/digest/sha1.so
 %{ruby_libarchdir}/digest/sha2.so
+%dir %{ruby_libarchdir}/dl
 %{ruby_libarchdir}/dl.so
 %{ruby_libarchdir}/dl/callback.so
+%dir %{ruby_libarchdir}/enc
 %{ruby_libarchdir}/enc/big5.so
 %{ruby_libarchdir}/enc/cp949.so
 %{ruby_libarchdir}/enc/emacs_mule.so
@@ -439,6 +442,7 @@ make check
 %{ruby_libarchdir}/enc/koi8_r.so
 %{ruby_libarchdir}/enc/koi8_u.so
 %{ruby_libarchdir}/enc/shift_jis.so
+%dir %{ruby_libarchdir}/enc/trans
 %{ruby_libarchdir}/enc/trans/big5.so
 %{ruby_libarchdir}/enc/trans/chinese.so
 %{ruby_libarchdir}/enc/trans/emoji.so
@@ -469,11 +473,15 @@ make check
 %{ruby_libarchdir}/fiddle.so
 %{ruby_libarchdir}/gdbm.so
 %{ruby_libarchdir}/iconv.so
+%dir %{ruby_libarchdir}/io
 %{ruby_libarchdir}/io/console.so
 %{ruby_libarchdir}/io/nonblock.so
 %{ruby_libarchdir}/io/wait.so
+%dir %{ruby_libarchdir}/json
+%dir %{ruby_libarchdir}/json/ext
 %{ruby_libarchdir}/json/ext/generator.so
 %{ruby_libarchdir}/json/ext/parser.so
+%dir %{ruby_libarchdir}/mathn
 %{ruby_libarchdir}/mathn/complex.so
 %{ruby_libarchdir}/mathn/rational.so
 %{ruby_libarchdir}/nkf.so
@@ -482,6 +490,7 @@ make check
 %{ruby_libarchdir}/pathname.so
 %{ruby_libarchdir}/psych.so
 %{ruby_libarchdir}/pty.so
+%dir %{ruby_libarchdir}/racc
 %{ruby_libarchdir}/racc/cparse.so
 %{ruby_libarchdir}/rbconfig.rb
 %{ruby_libarchdir}/readline.so
