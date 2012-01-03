@@ -207,7 +207,7 @@ documentation.
 %package tcltk
 Summary:    Tcl/Tk interface for scripting language Ruby
 Group:      Development/Languages
-Requires:   %{name}-libs = %{ruby_version_patch_level}
+Requires:   %{name}-libs%{?_isa} = %{ruby_version_patch_level}
 Provides:   ruby(tcltk) = %{ruby_version_patch_level}-%{release}
 
 %description tcltk
