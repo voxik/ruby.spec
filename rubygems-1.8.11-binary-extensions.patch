@@ -231,7 +231,7 @@ diff --git a/lib/rubygems/uninstaller.rb b/lib/rubygems/uninstaller.rb
 index cc32ea4..94d78e0 100644
 --- a/lib/rubygems/uninstaller.rb
 +++ b/lib/rubygems/uninstaller.rb
-@@ -200,6 +200,7 @@ class Gem::Uninstaller
+@@ -213,6 +213,7 @@ class Gem::Uninstaller
        File.writable?(spec.base_dir)
  
      FileUtils.rm_rf spec.full_gem_path
