@@ -378,6 +378,7 @@ make check
 %{ruby_libdir}/racc
 %exclude %{ruby_libdir}/rake
 %{ruby_libdir}/rbconfig
+%exclude %{ruby_libdir}/rbconfig/datadir.rb
 %exclude %{ruby_libdir}/rdoc
 %{ruby_libdir}/rexml
 %{ruby_libdir}/rinda
@@ -499,6 +500,7 @@ make check
 %{_bindir}/gem
 %{rubygems_dir}
 %{gem_dir}
+%{ruby_libdir}/rbconfig/datadir.rb
 %exclude %{gem_dir}/gems/rake-%{rake_version}
 %exclude %{gem_dir}/gems/rdoc-%{rdoc_version}
 %exclude %{gem_dir}/specifications/rake-%{rake_version}.gemspec
