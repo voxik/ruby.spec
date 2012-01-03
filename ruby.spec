@@ -332,7 +332,6 @@ make check
 %{_includedir}/%{_normalized_cpu}-%{_target_os}/ruby
 
 %{_libdir}/libruby.so
-%dir %{_libdir}/pkgconfig
 %{_libdir}/pkgconfig/ruby-1.9.pc
 
 %files libs
