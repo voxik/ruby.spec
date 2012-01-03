@@ -245,7 +245,7 @@ autoconf
         --enable-shared \
         --disable-versioned-paths
 
-make %{?_smp_mflags} COPY="cp -p"
+make %{?_smp_mflags} COPY="cp -p" Q=
 
 
 %install
