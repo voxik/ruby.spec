@@ -245,6 +245,8 @@ autoconf
         --enable-shared \
         --disable-versioned-paths
 
+# Q= makes the build output more verbose and allows to check Fedora
+# compiler options.
 make %{?_smp_mflags} COPY="cp -p" Q=
 
 
