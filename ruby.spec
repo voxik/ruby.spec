@@ -31,9 +31,9 @@
 # RubyGems should be share by all Ruby implementations.
 %global rubygems_dir %{_datadir}/rubygems
 
-# Specify custom RubyGems root and other related macros.
+# Specify custom RubyGems root.
 %global gem_dir %{_datadir}/gems
-%global gem_instdir %{gem_dir}/gems/%{gemname}-%{version}
+%global gem_extdir %{_libdir}/gems
 
 %global rake_version 0.9.2.2
 # TODO: The IRB has strange versioning. Keep the Ruby's versioning ATM.
@@ -345,6 +345,9 @@ cp %{SOURCE1} %{buildroot}%{rubygems_dir}/rubygems/defaults
 # Move gems root into common direcotry, out of Ruby directory structure.
 mv %{buildroot}%{ruby_libdir}/gems/%{ruby_abi} %{buildroot}%{gem_dir}
 
+# Create folder for gem binary extensions.
+mkdir -p %{gem_extinstdir}/exts
+
 %check
 make check
 
@@ -564,6 +567,7 @@ make check
 %{_bindir}/gem
 %{rubygems_dir}
 %{gem_dir}
+%{gem_extdir}
 %{ruby_libdir}/rbconfig/datadir.rb
 %exclude %{gem_dir}/gems/rake-%{rake_version}
 %exclude %{gem_dir}/gems/rdoc-%{rdoc_version}
