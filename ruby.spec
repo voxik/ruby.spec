@@ -42,6 +42,7 @@
 %global rdoc_version 3.9.4
 %global bigdecimal_version 1.1.0
 %global io_console_version 0.3
+%global json_version 1.5.4
 
 %global	_normalized_cpu	%(echo %{_target_cpu} | sed 's/^ppc/powerpc/;s/i.86/i386/;s/sparcv./sparc/;s/armv.*/arm/')
 
@@ -238,6 +239,18 @@ IO/Console provides very simple and portable access to console. It doesn’t
 provide higher layer features, such like curses and readline.
 
 
+%package -n rubygem-json
+Summary:    IO/Console is a simple console utilizing library
+Version:    %{json_version}
+Group:      Development/Libraries
+Requires:   ruby(rubygems) = %{rubygems_version}
+Provides:   rubygem(json) = %{version}-%{release}
+
+%description -n rubygem-json
+IO/Console provides very simple and portable access to console. It doesn’t
+provide higher layer features, such like curses and readline.
+
+
 %package tcltk
 Summary:    Tcl/Tk interface for scripting language Ruby
 Group:      Development/Languages
@@ -389,6 +402,7 @@ mv %{buildroot}%{ruby_libdir}/gems/%{ruby_abi} %{buildroot}%{gem_dir}
 %dir %{ruby_libdir}
 %{ruby_libdir}/*.rb
 %exclude %{ruby_libdir}/*-tk.rb
+%exclude %{ruby_libdir}/json.rb
 %exclude %{ruby_libdir}/irb.rb
 %exclude %{ruby_libdir}/rake.rb
 %exclude %{ruby_libdir}/rdoc.rb
@@ -405,7 +419,7 @@ mv %{buildroot}%{ruby_libdir}/gems/%{ruby_abi} %{buildroot}%{gem_dir}
 %{ruby_libdir}/io
 %exclude %{ruby_libdir}/io/console
 %exclude %{ruby_libdir}/irb
-%{ruby_libdir}/json
+%exclude %{ruby_libdir}/json
 %{ruby_libdir}/matrix
 %{ruby_libdir}/minitest
 %{ruby_libdir}/net
@@ -514,10 +528,7 @@ mv %{buildroot}%{ruby_libdir}/gems/%{ruby_abi} %{buildroot}%{gem_dir}
 %exclude %{ruby_libarchdir}/io/console.so
 %{ruby_libarchdir}/io/nonblock.so
 %{ruby_libarchdir}/io/wait.so
-%dir %{ruby_libarchdir}/json
-%dir %{ruby_libarchdir}/json/ext
-%{ruby_libarchdir}/json/ext/generator.so
-%{ruby_libarchdir}/json/ext/parser.so
+%exclude %{ruby_libarchdir}/json
 %dir %{ruby_libarchdir}/mathn
 %{ruby_libarchdir}/mathn/complex.so
 %{ruby_libarchdir}/mathn/rational.so
@@ -551,6 +562,7 @@ mv %{buildroot}%{ruby_libdir}/gems/%{ruby_abi} %{buildroot}%{gem_dir}
 %exclude %{gem_dir}/gems/rdoc-%{rdoc_version}
 %exclude %{gem_dir}/specifications/bigdecimal-%{bigdecimal_version}.gemspec
 %exclude %{gem_dir}/specifications/io-console-%{io_console_version}.gemspec
+%exclude %{gem_dir}/specifications/json-%{json_version}.gemspec
 %exclude %{gem_dir}/specifications/rake-%{rake_version}.gemspec
 %exclude %{gem_dir}/specifications/rdoc-%{rdoc_version}.gemspec
 
@@ -590,6 +602,12 @@ mv %{buildroot}%{ruby_libdir}/gems/%{ruby_abi} %{buildroot}%{gem_dir}
 %{ruby_libarchdir}/io/console.so
 %{ruby_libdir}/io/console
 %{gem_dir}/specifications/io-console-%{io_console_version}.gemspec
+
+%files -n rubygem-json
+%{ruby_libarchdir}/json
+%{ruby_libdir}/json
+%{ruby_libdir}/json.rb
+%{gem_dir}/specifications/json-%{json_version}.gemspec
 
 %files tcltk
 %{ruby_libdir}/*-tk.rb
