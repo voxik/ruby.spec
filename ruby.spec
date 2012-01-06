@@ -131,7 +131,7 @@ Summary:    The Ruby standard for packaging ruby libraries
 Version:    %{rubygems_version}
 Group:      Development/Libraries
 License:    Ruby or MIT
-Requires:   %{name}-libs = %{ruby_version_patch_level}
+Requires:   ruby(abi) = %{ruby_abi}
 Requires:   rubygem(rdoc) = %{rdoc_version}
 Provides:   gem = %{version}-%{release}
 Provides:   ruby(rubygems) = %{version}-%{release}
@@ -261,7 +261,6 @@ markup language.
 %package tcltk
 Summary:    Tcl/Tk interface for scripting language Ruby
 Group:      Development/Languages
-Requires:   ruby(abi) = %{ruby_abi}
 Requires:   %{name}-libs%{?_isa} = %{ruby_version_patch_level}
 Provides:   ruby(tcltk) = %{ruby_version_patch_level}-%{release}
 
