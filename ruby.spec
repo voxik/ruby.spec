@@ -159,6 +159,7 @@ Summary:    Ruby based make-like utility
 Version:    %{rake_version}
 Group:      Development/Libraries
 License:    Ruby or MIT
+Requires:   ruby(abi) = %{ruby_abi}
 Requires:   ruby(rubygems) = %{rubygems_version}
 Provides:   rake = %{version}-%{release}
 Provides:   rubygem(rake) = %{version}-%{release}
@@ -188,6 +189,7 @@ Summary:    A tool to generate HTML and command-line documentation for Ruby proj
 Version:    %{rdoc_version}
 Group:      Development/Libraries
 License:    GPLv2 and Ruby and MIT
+Requires:   ruby(abi) = %{ruby_abi}
 Requires:   ruby(rubygems) = %{rubygems_version}
 Requires:   ruby(irb) = %{irb_version}
 Provides:   rdoc = %{version}-%{release}
@@ -211,6 +213,7 @@ documentation.
 Summary:    BigDecimal provides arbitrary-precision floating point decimal arithmetic
 Version:    %{bigdecimal_version}
 Group:      Development/Libraries
+Requires:   ruby(abi) = %{ruby_abi}
 Requires:   ruby(rubygems) = %{rubygems_version}
 Provides:   rubygem(bigdecimal) = %{version}-%{release}
 
@@ -231,6 +234,7 @@ conversion between base 10 and base 2.
 Summary:    IO/Console is a simple console utilizing library
 Version:    %{io_console_version}
 Group:      Development/Libraries
+Requires:   ruby(abi) = %{ruby_abi}
 Requires:   ruby(rubygems) = %{rubygems_version}
 Provides:   rubygem(io-console) = %{version}-%{release}
 
@@ -243,6 +247,7 @@ provide higher layer features, such like curses and readline.
 Summary:    This is a JSON implementation as a Ruby extension in C
 Version:    %{json_version}
 Group:      Development/Libraries
+Requires:   ruby(abi) = %{ruby_abi}
 Requires:   ruby(rubygems) = %{rubygems_version}
 Provides:   rubygem(json) = %{version}-%{release}
 
@@ -256,6 +261,7 @@ markup language.
 %package tcltk
 Summary:    Tcl/Tk interface for scripting language Ruby
 Group:      Development/Languages
+Requires:   ruby(abi) = %{ruby_abi}
 Requires:   %{name}-libs%{?_isa} = %{ruby_version_patch_level}
 Provides:   ruby(tcltk) = %{ruby_version_patch_level}-%{release}
 
