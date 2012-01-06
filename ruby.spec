@@ -41,6 +41,7 @@
 %global irb_version %{ruby_version_patch_level}
 %global rdoc_version 3.9.4
 %global bigdecimal_version 1.1.0
+%global io_console_version 0.3
 
 %global	_normalized_cpu	%(echo %{_target_cpu} | sed 's/^ppc/powerpc/;s/i.86/i386/;s/sparcv./sparc/;s/armv.*/arm/')
 
@@ -225,6 +226,18 @@ floating point arithmetic often introduces subtle errors because of the
 conversion between base 10 and base 2.
 
 
+%package -n rubygem-io-console
+Summary:    IO/Console is a simple console utilizing library
+Version:    %{io_console_version}
+Group:      Development/Libraries
+Requires:   ruby(rubygems) = %{rubygems_version}
+Provides:   rubygem(io-console) = %{version}-%{release}
+
+%description -n rubygem-io-console
+IO/Console provides very simple and portable access to console. It doesn’t
+provide higher layer features, such like curses and readline.
+
+
 %package tcltk
 Summary:    Tcl/Tk interface for scripting language Ruby
 Group:      Development/Languages
@@ -390,6 +403,7 @@ mv %{buildroot}%{ruby_libdir}/gems/%{ruby_abi} %{buildroot}%{gem_dir}
 %{ruby_libdir}/fiddle
 %exclude %{ruby_libdir}/gems
 %{ruby_libdir}/io
+%exclude %{ruby_libdir}/io/console
 %exclude %{ruby_libdir}/irb
 %{ruby_libdir}/json
 %{ruby_libdir}/matrix
@@ -497,7 +511,7 @@ mv %{buildroot}%{ruby_libdir}/gems/%{ruby_abi} %{buildroot}%{gem_dir}
 %{ruby_libarchdir}/gdbm.so
 %{ruby_libarchdir}/iconv.so
 %dir %{ruby_libarchdir}/io
-%{ruby_libarchdir}/io/console.so
+%exclude %{ruby_libarchdir}/io/console.so
 %{ruby_libarchdir}/io/nonblock.so
 %{ruby_libarchdir}/io/wait.so
 %dir %{ruby_libarchdir}/json
@@ -536,6 +550,7 @@ mv %{buildroot}%{ruby_libdir}/gems/%{ruby_abi} %{buildroot}%{gem_dir}
 %exclude %{gem_dir}/gems/rake-%{rake_version}
 %exclude %{gem_dir}/gems/rdoc-%{rdoc_version}
 %exclude %{gem_dir}/specifications/bigdecimal-%{bigdecimal_version}.gemspec
+%exclude %{gem_dir}/specifications/io-console-%{io_console_version}.gemspec
 %exclude %{gem_dir}/specifications/rake-%{rake_version}.gemspec
 %exclude %{gem_dir}/specifications/rdoc-%{rdoc_version}.gemspec
 
@@ -570,6 +585,11 @@ mv %{buildroot}%{ruby_libdir}/gems/%{ruby_abi} %{buildroot}%{gem_dir}
 %{ruby_libarchdir}/bigdecimal.so
 %{ruby_libdir}/bigdecimal
 %{gem_dir}/specifications/bigdecimal-%{bigdecimal_version}.gemspec
+
+%files -n rubygem-io-console
+%{ruby_libarchdir}/io/console.so
+%{ruby_libdir}/io/console
+%{gem_dir}/specifications/io-console-%{io_console_version}.gemspec
 
 %files tcltk
 %{ruby_libdir}/*-tk.rb
