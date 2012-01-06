@@ -240,15 +240,17 @@ provide higher layer features, such like curses and readline.
 
 
 %package -n rubygem-json
-Summary:    IO/Console is a simple console utilizing library
+Summary:    This is a JSON implementation as a Ruby extension in C
 Version:    %{json_version}
 Group:      Development/Libraries
 Requires:   ruby(rubygems) = %{rubygems_version}
 Provides:   rubygem(json) = %{version}-%{release}
 
 %description -n rubygem-json
-IO/Console provides very simple and portable access to console. It doesn’t
-provide higher layer features, such like curses and readline.
+This is a implementation of the JSON specification according to RFC 4627.
+You can think of it as a low fat alternative to XML, if you want to store
+data to disk or transmit it over a network rather than use a verbose
+markup language. 
 
 
 %package tcltk
@@ -339,7 +341,7 @@ cp %{SOURCE1} %{buildroot}%{rubygems_dir}/rubygems/defaults
 mv %{buildroot}%{ruby_libdir}/gems/%{ruby_abi} %{buildroot}%{gem_dir}
 
 %check
-#make check
+make check
 
 %post libs -p /sbin/ldconfig
 
