@@ -346,7 +346,7 @@ cp %{SOURCE1} %{buildroot}%{rubygems_dir}/rubygems/defaults
 mv %{buildroot}%{ruby_libdir}/gems/%{ruby_abi} %{buildroot}%{gem_dir}
 
 # Create folder for gem binary extensions.
-mkdir -p %{gem_extinstdir}/exts
+mkdir -p %{buildroot}%{gem_extdir}/exts
 
 %check
 make check
