@@ -40,6 +40,7 @@
 # http://redmine.ruby-lang.org/issues/5313
 %global irb_version %{ruby_version_patch_level}
 %global rdoc_version 3.9.4
+%global bigdecimal_version 1.1.0
 
 %global	_normalized_cpu	%(echo %{_target_cpu} | sed 's/^ppc/powerpc/;s/i.86/i386/;s/sparcv./sparc/;s/armv.*/arm/')
 
@@ -204,6 +205,26 @@ includes the 'rdoc' and 'ri' tools for generating and displaying online
 documentation.
 
 
+%package -n rubygem-bigdecimal
+Summary:    BigDecimal provides arbitrary-precision floating point decimal arithmetic
+Version:    %{bigdecimal_version}
+Group:      Development/Libraries
+Requires:   ruby(rubygems) = %{rubygems_version}
+Provides:   rubygem(bigdecimal) = %{version}-%{release}
+
+%description -n rubygem-bigdecimal
+Ruby provides built-in support for arbitrary precision integer arithmetic.
+For example:
+
+42**13 -> 1265437718438866624512
+
+BigDecimal provides similar support for very large or very accurate floating
+point numbers. Decimal arithmetic is also useful for general calculation,
+because it provides the correct answers people expect–whereas normal binary
+floating point arithmetic often introduces subtle errors because of the
+conversion between base 10 and base 2.
+
+
 %package tcltk
 Summary:    Tcl/Tk interface for scripting language Ruby
 Group:      Development/Languages
@@ -292,7 +313,7 @@ cp %{SOURCE1} %{buildroot}%{rubygems_dir}/rubygems/defaults
 mv %{buildroot}%{ruby_libdir}/gems/%{ruby_abi} %{buildroot}%{gem_dir}
 
 %check
-make check
+#make check
 
 %post libs -p /sbin/ldconfig
 
@@ -360,7 +381,7 @@ make check
 %exclude %{ruby_libdir}/rdoc.rb
 %exclude %{ruby_libdir}/tcltk.rb
 %exclude %{ruby_libdir}/tk*.rb
-%{ruby_libdir}/bigdecimal
+%exclude %{ruby_libdir}/bigdecimal
 %{ruby_libdir}/cgi
 %{ruby_libdir}/date
 %{ruby_libdir}/digest
@@ -399,7 +420,7 @@ make check
 # Platform specific libraries.
 %{_libdir}/libruby.so.*
 %dir %{ruby_libarchdir}
-%{ruby_libarchdir}/bigdecimal.so
+%exclude %{ruby_libarchdir}/bigdecimal.so
 %{ruby_libarchdir}/continuation.so
 %{ruby_libarchdir}/coverage.so
 %{ruby_libarchdir}/curses.so
@@ -514,6 +535,7 @@ make check
 %{ruby_libdir}/rbconfig/datadir.rb
 %exclude %{gem_dir}/gems/rake-%{rake_version}
 %exclude %{gem_dir}/gems/rdoc-%{rdoc_version}
+%exclude %{gem_dir}/specifications/bigdecimal-%{bigdecimal_version}.gemspec
 %exclude %{gem_dir}/specifications/rake-%{rake_version}.gemspec
 %exclude %{gem_dir}/specifications/rdoc-%{rdoc_version}.gemspec
 
@@ -543,6 +565,11 @@ make check
 %{gem_dir}/specifications/rdoc-%{rdoc_version}.gemspec
 %{_mandir}/man1/ri*
 %{_datadir}/ri
+
+%files -n rubygem-bigdecimal
+%{ruby_libarchdir}/bigdecimal.so
+%{ruby_libdir}/bigdecimal
+%{gem_dir}/specifications/bigdecimal-%{bigdecimal_version}.gemspec
 
 %files tcltk
 %{ruby_libdir}/*-tk.rb
