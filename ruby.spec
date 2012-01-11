@@ -33,7 +33,8 @@
 
 # Specify custom RubyGems root.
 %global gem_dir %{_datadir}/gems
-%global gem_extdir %{_libdir}/gems
+# TODO: Should we create arch specific rubygems-filesystem?
+%global gem_extdir %{_exec_prefix}/lib{,64}/gems
 
 %global rake_version 0.9.2.2
 # TODO: The IRB has strange versioning. Keep the Ruby's versioning ATM.
@@ -345,7 +346,7 @@ cp %{SOURCE1} %{buildroot}%{rubygems_dir}/rubygems/defaults
 # Move gems root into common direcotry, out of Ruby directory structure.
 mv %{buildroot}%{ruby_libdir}/gems/%{ruby_abi} %{buildroot}%{gem_dir}
 
-# Create folder for gem binary extensions.
+# Create folders for gem binary extensions.
 mkdir -p %{buildroot}%{gem_extdir}/exts
 
 %check
@@ -566,7 +567,7 @@ make check
 %{_bindir}/gem
 %{rubygems_dir}
 %{gem_dir}
-%{gem_extdir}
+%{_exec_prefix}/lib*/gems
 %exclude %{gem_dir}/gems/rake-%{rake_version}
 %exclude %{gem_dir}/gems/rdoc-%{rdoc_version}
 %exclude %{gem_dir}/specifications/bigdecimal-%{bigdecimal_version}.gemspec
