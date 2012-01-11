@@ -65,7 +65,7 @@ index 6bfc73e..31dc446 100755
  install?(:local, :comm, :lib) do
    prepare "library scripts", rubylibdir
    noinst = %w[README* *.txt *.rdoc]
-+  noinst += %w[*ubygems.rb rubygems/] if rubygemsdir
++  noinst += %w[*ubygems.rb rubygems/ datadir.rb] if rubygemsdir
    install_recursive(File.join(srcdir, "lib"), rubylibdir, :no_install => noinst, :mode => $data_mode)
 +  if rubygemsdir
 +    noinst = %w[obsolete.rb]
