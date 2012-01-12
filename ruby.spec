@@ -285,8 +285,6 @@ Tcl/Tk interface for the object-oriented scripting language Ruby.
 %build
 autoconf
 
-# TODO: Search path should be probably converted into patch, since
-# the gem directory should have lower priority.
 %configure \
         --with-rubylibprefix='%{ruby_libdir}' \
         --with-archdir='%{ruby_libarchdir}' \
