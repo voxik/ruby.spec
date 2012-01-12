@@ -1,0 +1,53 @@
+Index: ChangeLog
+===================================================================
+--- ChangeLog	(revision 34277)
++++ ChangeLog	(revision 34278)
+@@ -1,3 +1,13 @@
++Thu Jan 12 13:51:00 2012  NARUSE, Yui  <naruse@ruby-lang.org>
++
++	* cont.c (cont_restore_0): prevent optimizing out `sp'. sp is used for
++	  reserving a memory space with ALLOCA_N for restoring machine stack
++	  stored in cont->machine_stack, but clang optimized out it (and
++	  maybe #5851 is also caused by this).
++	  This affected TestContinuation#test_check_localvars.
++
++	* cont.c (cont_restore_1): revert workaround introduced in r32201.
++
+ Mon Oct 10 22:33:12 2011  KOSAKI Motohiro  <kosaki.motohiro@gmail.com>
+ 
+ 	* test/-ext-/old_thread_select/test_old_thread_select.rb:
+Index: cont.c
+===================================================================
+--- cont.c	(revision 34277)
++++ cont.c	(revision 34278)
+@@ -669,10 +669,9 @@
+     }
+ #endif
+     if (cont->machine_stack_src) {
+-	size_t i;
+ 	FLUSH_REGISTER_WINDOWS;
+-	for (i = 0; i < cont->machine_stack_size; i++)
+-	    cont->machine_stack_src[i] = cont->machine_stack[i];
++	MEMCPY(cont->machine_stack_src, cont->machine_stack,
++		VALUE, cont->machine_stack_size);
+     }
+ 
+ #ifdef __ia64
+@@ -742,7 +741,7 @@
+ 	    if (&space[0] > end) {
+ # ifdef HAVE_ALLOCA
+ 		volatile VALUE *sp = ALLOCA_N(VALUE, &space[0] - end);
+-		(void)sp;
++		space[0] = *sp;
+ # else
+ 		cont_restore_0(cont, &space[0]);
+ # endif
+@@ -758,7 +757,7 @@
+ 	    if (&space[STACK_PAD_SIZE] < end) {
+ # ifdef HAVE_ALLOCA
+ 		volatile VALUE *sp = ALLOCA_N(VALUE, end - &space[STACK_PAD_SIZE]);
+-		(void)sp;
++		space[0] = *sp;
+ # else
+ 		cont_restore_0(cont, &space[STACK_PAD_SIZE-1]);
+ # endif
