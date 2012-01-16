@@ -44,6 +44,7 @@
 %global bigdecimal_version 1.1.0
 %global io_console_version 0.3
 %global json_version 1.5.4
+%global minitest_version 2.5.1
 
 %global	_normalized_cpu	%(echo %{_target_cpu} | sed 's/^ppc/powerpc/;s/i.86/i386/;s/sparcv./sparc/;s/armv.*/arm/')
 
@@ -262,7 +263,31 @@ Provides:   rubygem(json) = %{version}-%{release}
 This is a implementation of the JSON specification according to RFC 4627.
 You can think of it as a low fat alternative to XML, if you want to store
 data to disk or transmit it over a network rather than use a verbose
-markup language. 
+markup language.
+
+
+%package -n rubygem-minitest
+Summary:    Minitest provides a complete suite of testing facilities.
+Version:    %{minitest_version}
+Group:      Development/Libraries
+Requires:   ruby(abi) = %{ruby_abi}
+Requires:   ruby(rubygems) = %{rubygems_version}
+Provides:   rubygem(minitest) = %{version}-%{release}
+BuildArch:  noarch
+
+%description -n rubygem-minitest
+minitest/unit is a small and incredibly fast unit testing framework.
+
+minitest/spec is a functionally complete spec engine.
+
+minitest/benchmark is an awesome way to assert the performance of your
+algorithms in a repeatable manner.
+
+minitest/mock by Steven Baker, is a beautifully tiny mock object
+framework.
+
+minitest/pride shows pride in testing and adds coloring to your test
+output.
 
 
 %package tcltk
@@ -355,6 +380,14 @@ mv %{buildroot}%{ruby_libdir}/gems/%{ruby_abi} %{buildroot}%{gem_dir}
 # Create folders for gem binary extensions.
 mkdir -p %{buildroot}%{gem_extdir}/exts
 
+# Move bundled rubygems to %%gem_dir and %%gem_extdir
+mkdir -p %{buildroot}%{gem_dir}/gems/minitest-%{minitest_version}/lib
+mv %{buildroot}%{ruby_libdir}/minitest %{buildroot}%{gem_dir}/gems/minitest-%{minitest_version}/lib
+
+# Adjust the gemspec files so that the gems will load properly
+sed -i '2 a\
+  s.require_paths = ["lib"]' %{buildroot}/%{gem_dir}/specifications/minitest-%{minitest_version}.gemspec
+
 %check
 make check
 
@@ -438,7 +471,6 @@ make check
 %exclude %{ruby_libdir}/irb
 %exclude %{ruby_libdir}/json
 %{ruby_libdir}/matrix
-%{ruby_libdir}/minitest
 %{ruby_libdir}/net
 %{ruby_libdir}/openssl
 %{ruby_libdir}/optparse
@@ -579,6 +611,7 @@ make check
 %exclude %{gem_dir}/specifications/bigdecimal-%{bigdecimal_version}.gemspec
 %exclude %{gem_dir}/specifications/io-console-%{io_console_version}.gemspec
 %exclude %{gem_dir}/specifications/json-%{json_version}.gemspec
+%exclude %{gem_dir}/specifications/minitest-%{minitest_version}.gemspec
 %exclude %{gem_dir}/specifications/rake-%{rake_version}.gemspec
 %exclude %{gem_dir}/specifications/rdoc-%{rdoc_version}.gemspec
 
@@ -624,6 +657,10 @@ make check
 %{ruby_libdir}/json
 %{ruby_libdir}/json.rb
 %{gem_dir}/specifications/json-%{json_version}.gemspec
+
+%files -n rubygem-minitest
+%{gem_dir}/gems/minitest-%{minitest_version}
+%{gem_dir}/specifications/minitest-%{minitest_version}.gemspec
 
 %files tcltk
 %{ruby_libdir}/*-tk.rb
