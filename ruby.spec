@@ -397,6 +397,11 @@ mkdir -p %{buildroot}%{_libdir}/gems/exts/io-console-%{io_console_version}/lib/i
 mv %{buildroot}%{ruby_libdir}/io %{buildroot}%{gem_dir}/gems/io-console-%{io_console_version}/lib
 mv %{buildroot}%{ruby_libarchdir}/io/console.so %{buildroot}%{_libdir}/gems/exts/io-console-%{io_console_version}/lib/io
 
+mkdir -p %{buildroot}%{gem_dir}/gems/json-%{json_version}/lib
+mkdir -p %{buildroot}%{_libdir}/gems/exts/json-%{json_version}/lib
+mv %{buildroot}%{ruby_libdir}/json* %{buildroot}%{gem_dir}/gems/json-%{json_version}/lib
+mv %{buildroot}%{ruby_libarchdir}/json/ %{buildroot}%{_libdir}/gems/exts/json-%{json_version}/lib/
+
 mkdir -p %{buildroot}%{gem_dir}/gems/minitest-%{minitest_version}/lib
 mv %{buildroot}%{ruby_libdir}/minitest %{buildroot}%{gem_dir}/gems/minitest-%{minitest_version}/lib
 
@@ -414,6 +419,10 @@ sed -i -e '2 a\
 sed -i -e '2 a\
   s.require_paths = ["lib"]' -e '3 a\
   s.extensions = ["io/console.so"]' %{buildroot}/%{gem_dir}/specifications/io-console-%{io_console_version}.gemspec
+
+sed -i -e '2 a\
+  s.require_paths = ["lib"]' -e '3 a\
+  s.extensions = ["json/ext/parser.so", "json/ext/generator.so"]' %{buildroot}/%{gem_dir}/specifications/json-%{json_version}.gemspec
 
 sed -i '2 a\
   s.require_paths = ["lib"]' %{buildroot}/%{gem_dir}/specifications/minitest-%{minitest_version}.gemspec
@@ -482,7 +491,6 @@ make check
 %dir %{ruby_libdir}
 %{ruby_libdir}/*.rb
 %exclude %{ruby_libdir}/*-tk.rb
-%exclude %{ruby_libdir}/json.rb
 %exclude %{ruby_libdir}/irb.rb
 %exclude %{ruby_libdir}/tcltk.rb
 %exclude %{ruby_libdir}/tk*.rb
@@ -494,7 +502,6 @@ make check
 %{ruby_libdir}/fiddle
 %exclude %{ruby_libdir}/gems
 %exclude %{ruby_libdir}/irb
-%exclude %{ruby_libdir}/json
 %{ruby_libdir}/matrix
 %{ruby_libdir}/net
 %{ruby_libdir}/openssl
@@ -597,7 +604,6 @@ make check
 %dir %{ruby_libarchdir}/io
 %{ruby_libarchdir}/io/nonblock.so
 %{ruby_libarchdir}/io/wait.so
-%exclude %{ruby_libarchdir}/json
 %dir %{ruby_libarchdir}/mathn
 %{ruby_libarchdir}/mathn/complex.so
 %{ruby_libarchdir}/mathn/rational.so
@@ -626,9 +632,11 @@ make check
 %{_bindir}/gem
 %{rubygems_dir}
 %{gem_dir}
+%exclude %{gem_dir}/gems/*
 %{_exec_prefix}/lib*/gems
 %exclude %{_exec_prefix}/lib*/gems/exts/bigdecimal-%{bigdecimal_version}
 %exclude %{_exec_prefix}/lib*/gems/exts/io-console-%{io_console_version}
+%exclude %{_exec_prefix}/lib*/gems/exts/json-%{json_version}
 %exclude %{gem_dir}/gems/rake-%{rake_version}
 %exclude %{gem_dir}/gems/rdoc-%{rdoc_version}
 %exclude %{gem_dir}/specifications/bigdecimal-%{bigdecimal_version}.gemspec
@@ -672,9 +680,8 @@ make check
 %{gem_dir}/specifications/io-console-%{io_console_version}.gemspec
 
 %files -n rubygem-json
-%{ruby_libarchdir}/json
-%{ruby_libdir}/json
-%{ruby_libdir}/json.rb
+%{_libdir}/gems/exts/json-%{json_version}
+%{gem_dir}/gems/json-%{json_version}
 %{gem_dir}/specifications/json-%{json_version}.gemspec
 
 %files -n rubygem-minitest
