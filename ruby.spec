@@ -85,6 +85,9 @@ Patch9: rubygems-1.8.11-binary-extensions.patch
 # Fixes segfaults when build with GCC 4.7.
 # http://bugs.ruby-lang.org/issues/5851
 Patch10: ruby-1.9.3-prevent-optimizing-sp.patch
+# Fixes json encoding failures when build with GCC 4.7.
+# http://bugs.ruby-lang.org/issues/5888
+Patch11: ruby-1.9.3-fix-json-parser.patch
 
 Requires: %{name}-libs%{?_isa} = %{version}-%{release}
 Requires: ruby(rubygems) >= %{rubygems_version}
@@ -285,6 +288,7 @@ Tcl/Tk interface for the object-oriented scripting language Ruby.
 %patch8 -p1
 %patch9 -p1
 %patch10
+%patch11 -p1
 
 %build
 autoconf
