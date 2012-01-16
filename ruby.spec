@@ -381,10 +381,16 @@ mv %{buildroot}%{ruby_libdir}/gems/%{ruby_abi} %{buildroot}%{gem_dir}
 mkdir -p %{buildroot}%{gem_extdir}/exts
 
 # Move bundled rubygems to %%gem_dir and %%gem_extdir
+mkdir -p %{buildroot}%{gem_dir}/gems/rake-%{rake_version}/lib
+mv %{buildroot}%{ruby_libdir}/rake* %{buildroot}%{gem_dir}/gems/rake-%{rake_version}/lib
+
 mkdir -p %{buildroot}%{gem_dir}/gems/minitest-%{minitest_version}/lib
 mv %{buildroot}%{ruby_libdir}/minitest %{buildroot}%{gem_dir}/gems/minitest-%{minitest_version}/lib
 
 # Adjust the gemspec files so that the gems will load properly
+sed -i '2 a\
+  s.require_paths = ["lib"]' %{buildroot}/%{gem_dir}/specifications/rake-%{rake_version}.gemspec
+
 sed -i '2 a\
   s.require_paths = ["lib"]' %{buildroot}/%{gem_dir}/specifications/minitest-%{minitest_version}.gemspec
 
@@ -454,7 +460,6 @@ make check
 %exclude %{ruby_libdir}/*-tk.rb
 %exclude %{ruby_libdir}/json.rb
 %exclude %{ruby_libdir}/irb.rb
-%exclude %{ruby_libdir}/rake.rb
 %exclude %{ruby_libdir}/rdoc.rb
 %exclude %{ruby_libdir}/tcltk.rb
 %exclude %{ruby_libdir}/tk*.rb
@@ -476,7 +481,6 @@ make check
 %{ruby_libdir}/optparse
 %{ruby_libdir}/psych
 %{ruby_libdir}/racc
-%exclude %{ruby_libdir}/rake
 %{ruby_libdir}/rbconfig
 %exclude %{ruby_libdir}/rdoc
 %{ruby_libdir}/rexml
@@ -620,8 +624,6 @@ make check
 
 %files -n rubygem-rake
 %{_bindir}/rake
-%{ruby_libdir}/rake.rb
-%{ruby_libdir}/rake
 %{gem_dir}/gems/rake-%{rake_version}
 %{gem_dir}/specifications/rake-%{rake_version}.gemspec
 %{_mandir}/man1/rake.1*
