@@ -364,6 +364,7 @@ cat >> %{buildroot}%{_sysconfdir}/rpm/macros.rubygems << \EOF
 
 # Common gem locations and files.
 %%gem_instdir %%{gem_dir}/gems/%%{gem_name}-%%{version}
+%%gem_extdir %%{_libdir}/gems/exts/%%{gem_name}-%%{version}
 %%gem_libdir %%{gem_instdir}/lib
 %%gem_cache %%{gem_dir}/cache/%%{gem_name}-%%{version}.gem
 %%gem_spec %%{gem_dir}/specifications/%%{gem_name}-%%{version}.gemspec
