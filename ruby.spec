@@ -392,6 +392,11 @@ mkdir -p %{buildroot}%{_libdir}/gems/exts/bigdecimal-%{bigdecimal_version}/lib
 mv %{buildroot}%{ruby_libdir}/bigdecimal %{buildroot}%{gem_dir}/gems/bigdecimal-%{bigdecimal_version}/lib
 mv %{buildroot}%{ruby_libarchdir}/bigdecimal.so %{buildroot}%{_libdir}/gems/exts/bigdecimal-%{bigdecimal_version}/lib
 
+mkdir -p %{buildroot}%{gem_dir}/gems/io-console-%{io_console_version}/lib
+mkdir -p %{buildroot}%{_libdir}/gems/exts/io-console-%{io_console_version}/lib/io
+mv %{buildroot}%{ruby_libdir}/io %{buildroot}%{gem_dir}/gems/io-console-%{io_console_version}/lib
+mv %{buildroot}%{ruby_libarchdir}/io/console.so %{buildroot}%{_libdir}/gems/exts/io-console-%{io_console_version}/lib/io
+
 mkdir -p %{buildroot}%{gem_dir}/gems/minitest-%{minitest_version}/lib
 mv %{buildroot}%{ruby_libdir}/minitest %{buildroot}%{gem_dir}/gems/minitest-%{minitest_version}/lib
 
@@ -405,6 +410,10 @@ sed -i '2 a\
 sed -i -e '2 a\
   s.require_paths = ["lib"]' -e '3 a\
   s.extensions = ["bigdecimal.so"]' %{buildroot}/%{gem_dir}/specifications/bigdecimal-%{bigdecimal_version}.gemspec
+
+sed -i -e '2 a\
+  s.require_paths = ["lib"]' -e '3 a\
+  s.extensions = ["io/console.so"]' %{buildroot}/%{gem_dir}/specifications/io-console-%{io_console_version}.gemspec
 
 sed -i '2 a\
   s.require_paths = ["lib"]' %{buildroot}/%{gem_dir}/specifications/minitest-%{minitest_version}.gemspec
@@ -484,8 +493,6 @@ make check
 %{ruby_libdir}/drb
 %{ruby_libdir}/fiddle
 %exclude %{ruby_libdir}/gems
-%{ruby_libdir}/io
-%exclude %{ruby_libdir}/io/console
 %exclude %{ruby_libdir}/irb
 %exclude %{ruby_libdir}/json
 %{ruby_libdir}/matrix
@@ -588,7 +595,6 @@ make check
 %{ruby_libarchdir}/gdbm.so
 %{ruby_libarchdir}/iconv.so
 %dir %{ruby_libarchdir}/io
-%exclude %{ruby_libarchdir}/io/console.so
 %{ruby_libarchdir}/io/nonblock.so
 %{ruby_libarchdir}/io/wait.so
 %exclude %{ruby_libarchdir}/json
@@ -622,6 +628,7 @@ make check
 %{gem_dir}
 %{_exec_prefix}/lib*/gems
 %exclude %{_exec_prefix}/lib*/gems/exts/bigdecimal-%{bigdecimal_version}
+%exclude %{_exec_prefix}/lib*/gems/exts/io-console-%{io_console_version}
 %exclude %{gem_dir}/gems/rake-%{rake_version}
 %exclude %{gem_dir}/gems/rdoc-%{rdoc_version}
 %exclude %{gem_dir}/specifications/bigdecimal-%{bigdecimal_version}.gemspec
@@ -660,8 +667,8 @@ make check
 %{gem_dir}/specifications/bigdecimal-%{bigdecimal_version}.gemspec
 
 %files -n rubygem-io-console
-%{ruby_libarchdir}/io/console.so
-%{ruby_libdir}/io/console
+%{_libdir}/gems/exts/io-console-%{io_console_version}
+%{gem_dir}/gems/io-console-%{io_console_version}
 %{gem_dir}/specifications/io-console-%{io_console_version}.gemspec
 
 %files -n rubygem-json
