@@ -387,6 +387,11 @@ mv %{buildroot}%{ruby_libdir}/rake* %{buildroot}%{gem_dir}/gems/rake-%{rake_vers
 mkdir -p %{buildroot}%{gem_dir}/gems/rdoc-%{rdoc_version}/lib
 mv %{buildroot}%{ruby_libdir}/rdoc* %{buildroot}%{gem_dir}/gems/rdoc-%{rdoc_version}/lib
 
+mkdir -p %{buildroot}%{gem_dir}/gems/bigdecimal-%{bigdecimal_version}/lib
+mkdir -p %{buildroot}%{_libdir}/gems/exts/bigdecimal-%{bigdecimal_version}/lib
+mv %{buildroot}%{ruby_libdir}/bigdecimal %{buildroot}%{gem_dir}/gems/bigdecimal-%{bigdecimal_version}/lib
+mv %{buildroot}%{ruby_libarchdir}/bigdecimal.so %{buildroot}%{_libdir}/gems/exts/bigdecimal-%{bigdecimal_version}/lib
+
 mkdir -p %{buildroot}%{gem_dir}/gems/minitest-%{minitest_version}/lib
 mv %{buildroot}%{ruby_libdir}/minitest %{buildroot}%{gem_dir}/gems/minitest-%{minitest_version}/lib
 
@@ -396,6 +401,10 @@ sed -i '2 a\
 
 sed -i '2 a\
   s.require_paths = ["lib"]' %{buildroot}/%{gem_dir}/specifications/rdoc-%{rdoc_version}.gemspec
+
+sed -i -e '2 a\
+  s.require_paths = ["lib"]' -e '3 a\
+  s.extensions = ["bigdecimal.so"]' %{buildroot}/%{gem_dir}/specifications/bigdecimal-%{bigdecimal_version}.gemspec
 
 sed -i '2 a\
   s.require_paths = ["lib"]' %{buildroot}/%{gem_dir}/specifications/minitest-%{minitest_version}.gemspec
@@ -468,7 +477,6 @@ make check
 %exclude %{ruby_libdir}/irb.rb
 %exclude %{ruby_libdir}/tcltk.rb
 %exclude %{ruby_libdir}/tk*.rb
-%exclude %{ruby_libdir}/bigdecimal
 %{ruby_libdir}/cgi
 %{ruby_libdir}/date
 %{ruby_libdir}/digest
@@ -504,7 +512,6 @@ make check
 # Platform specific libraries.
 %{_libdir}/libruby.so.*
 %dir %{ruby_libarchdir}
-%exclude %{ruby_libarchdir}/bigdecimal.so
 %{ruby_libarchdir}/continuation.so
 %{ruby_libarchdir}/coverage.so
 %{ruby_libarchdir}/curses.so
@@ -614,6 +621,7 @@ make check
 %{rubygems_dir}
 %{gem_dir}
 %{_exec_prefix}/lib*/gems
+%exclude %{_exec_prefix}/lib*/gems/exts/bigdecimal-%{bigdecimal_version}
 %exclude %{gem_dir}/gems/rake-%{rake_version}
 %exclude %{gem_dir}/gems/rdoc-%{rdoc_version}
 %exclude %{gem_dir}/specifications/bigdecimal-%{bigdecimal_version}.gemspec
@@ -647,8 +655,8 @@ make check
 %{_datadir}/ri
 
 %files -n rubygem-bigdecimal
-%{ruby_libarchdir}/bigdecimal.so
-%{ruby_libdir}/bigdecimal
+%{_libdir}/gems/exts/bigdecimal-%{bigdecimal_version}
+%{gem_dir}/gems/bigdecimal-%{bigdecimal_version}
 %{gem_dir}/specifications/bigdecimal-%{bigdecimal_version}.gemspec
 
 %files -n rubygem-io-console
