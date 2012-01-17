@@ -51,7 +51,7 @@
 Summary: An interpreter of object-oriented scripting language
 Name: ruby
 Version: %{ruby_version_patch_level}
-Release: 3%{?dist}
+Release: 4%{?dist}
 Group: Development/Languages
 License: Ruby or BSD
 URL: http://ruby-lang.org/
@@ -699,6 +699,11 @@ make check
 %{ruby_libdir}/tkextlib
 
 %changelog
+* Tue Jan 17 2012 Vít Ondruch <vondruch@redhat.com> - 1.9.3.0-4
+- Bundled gems moved into dedicated directories and subpackages.
+- Create and own RubyGems directories for binary extensions.
+- Fix build with GCC 4.7.
+
 * Wed Jan 04 2012 Vít Ondruch <vondruch@redhat.com> - 1.9.3.0-3
 - Fix RHEL build.
 - Fixed directory ownership.
