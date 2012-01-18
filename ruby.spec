@@ -125,9 +125,7 @@ Ruby or an application embedding Ruby.
 %package libs
 Summary:    Libraries necessary to run Ruby
 Group:      Development/Libraries
-# ext/bigdecimal/bigdecimal.{c,h} are under (GPL+ or Artistic) which
-# are used for bigdecimal.so
-License:    (Ruby or BSD) and (GPL+ or Artistic)
+License:    Ruby or BSD
 Provides:   ruby(abi) = %{ruby_abi}
 
 %description libs
@@ -221,6 +219,7 @@ documentation.
 Summary:    BigDecimal provides arbitrary-precision floating point decimal arithmetic
 Version:    %{bigdecimal_version}
 Group:      Development/Libraries
+License:    GPL+ or Artistic
 Requires:   ruby(abi) = %{ruby_abi}
 Requires:   ruby(rubygems) = %{rubygems_version}
 Provides:   rubygem(bigdecimal) = %{version}-%{release}
@@ -255,6 +254,7 @@ provide higher layer features, such like curses and readline.
 Summary:    This is a JSON implementation as a Ruby extension in C
 Version:    %{json_version}
 Group:      Development/Libraries
+License:    Ruby or GPLv2
 Requires:   ruby(abi) = %{ruby_abi}
 Requires:   ruby(rubygems) = %{rubygems_version}
 Provides:   rubygem(json) = %{version}-%{release}
@@ -270,6 +270,7 @@ markup language.
 Summary:    Minitest provides a complete suite of testing facilities.
 Version:    %{minitest_version}
 Group:      Development/Libraries
+License:    MIT
 Requires:   ruby(abi) = %{ruby_abi}
 Requires:   ruby(rubygems) = %{rubygems_version}
 Provides:   rubygem(minitest) = %{version}-%{release}
