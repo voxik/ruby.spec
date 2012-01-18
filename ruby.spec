@@ -139,6 +139,7 @@ Group:      Development/Libraries
 License:    Ruby or MIT
 Requires:   ruby(abi) = %{ruby_abi}
 Requires:   rubygem(rdoc) = %{rdoc_version}
+Requires:   rubygem(io-console) = %{io_console_version}
 Provides:   gem = %{version}-%{release}
 Provides:   ruby(rubygems) = %{version}-%{release}
 BuildArch:  noarch
