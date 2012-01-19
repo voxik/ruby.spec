@@ -51,7 +51,7 @@
 Summary: An interpreter of object-oriented scripting language
 Name: ruby
 Version: %{ruby_version_patch_level}
-Release: 4%{?dist}
+Release: 5%{?dist}
 Group: Development/Languages
 License: Ruby or BSD
 URL: http://ruby-lang.org/
@@ -701,6 +701,10 @@ make check
 %{ruby_libdir}/tkextlib
 
 %changelog
+* Wed Jan 18 2012 Vít Ondruch <vondruch@redhat.com> - 1.9.3.0-5
+- Add rubygems dependency on io-console for user interactions.
+- Gems license clarification.
+
 * Tue Jan 17 2012 Vít Ondruch <vondruch@redhat.com> - 1.9.3.0-4
 - Bundled gems moved into dedicated directories and subpackages.
 - Create and own RubyGems directories for binary extensions.
